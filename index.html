@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliachar Feig | Senior Software Engineer</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="icon" type="image/png"  href="assets/images/profile.JPG">
+
+    <link rel="stylesheet" href="css/custom.css">
+
+</head>
+
+<!--Body-->
+<body>
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<div class="bg-orb orb-1"></div>
+<div class="bg-orb orb-2"></div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">ELIACHAR<span style="color:var(--accent)">.FEIG</span></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link nav-home" href="#" aria-label="Home">
+                        <i class="fas fa-home"></i>
+                    </a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#work">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#learning">Learning</a></li>
+
+                <li class="nav-item dropdown ms-lg-4">
+
+                    <a class="nav-link btn btn-outline-info px-4 rounded-pill text-info"
+                       href="#contact-slide"
+                       id="contactButton"
+                       data-bs-auto-close="true"
+                       role="button"
+                       aria-expanded="false">
+                        Contact Me
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end mt-3 border-secondary bg-dark shadow-lg" id="contactMenu">
+                        <li><a class="dropdown-item text-light py-2" href="mailto:eliacharfeig@gmail.com"><i class="fas fa-envelope me-2 text-info"></i> Email Me</a></li>
+                        <li><a class="dropdown-item text-light py-2" href="tel:058-7272372"><i class="fas fa-phone me-2 text-info"></i> Call Me</a></li>
+                        <li><hr class="dropdown-divider bg-secondary"></li>
+                        <li><a class="dropdown-item text-light py-2" href="https://www.linkedin.com/in/eliachar-feig/" target="_blank"><i class="fab fa-linkedin me-2 text-info"></i> LinkedIn Profile</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header id="hero">
+    <div class="container" data-aos="fade-up">
+
+        <div class="hero-panel">
+            <h1 class="display-1">Eliachar Feig</h1>
+            <p class="hero-tagline">
+                    From idea to production.
+            </p>
+
+
+            <p class="lead text-light opacity-75 mb-4">
+                Senior Mobile Engineer specializing in <strong>iOS & Flutter</strong><br>
+                Building scalable, product-driven systems with <span class="text-info">Applied AI</span>
+            </p>
+
+            <p class="text-light opacity-75 small mb-4">
+                 Shipped production apps • AI-powered product on Google Play • Enterprise-scale systems
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="#projects" class="btn-pro text-decoration-none ">Explore Projects</a>
+
+                <a href="#about"
+                   class="btn btn-outline-light rounded-pill px-4 d-flex align-items-center justify-content-center">
+                    About Me
+                </a>
+
+                <a href="https://www.linkedin.com/in/eliachar-feig/" target="_blank" class="btn-social">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+
+            <div class="marquee mt-4">
+                <div class="marquee-content">
+                    <span>Full-stack</span> • <span>SwiftUI</span> • <span>Flutter</span> • <span>Node.js</span> • <span>Firebase</span> • <span>Applied AI</span> • <span>LLM Engineering</span> • <span>iOS/Android/Web</span> • <span>Apps & Websites</span> •
+                    <span>Full-stack</span> • <span>SwiftUI</span> • <span>Flutter</span> • <span>Node.js</span> • <span>Firebase</span> • <span>Applied AI</span> • <span>LLM Engineering</span> • <span>iOS/Android/Web</span> • <span>Apps & Websites</span> •
+                </div>
+            </div>
+
+            <div class="text-center mt-4 opacity-50 small">
+                ↓ Scroll to see selected work
+            </div>
+        </div>
+
+    </div>
+</header>
+
+
+<section id="about" class="py-5 mt-5">
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h6 class="tag mb-2">My Background</h6>
+                <h2 class="display-5 fw-bold mb-4">Bridging Engineering, Product, and <span class="text-info">Applied AI</span>.</h2>
+                <p class="text-secondary">
+                    I am a Senior Mobile Engineer with a strong product mindset, specialized in building scalable applications that bridge the gap between user experience and complex backends.
+                </p>
+                <p class="text-secondary">
+                    With 3+ years of experience in enterprise iOS & Flutter environments, I’ve expanded into full-stack ownership designing APIs and delivering features end-to-end. Recently, I’ve been focused on Applied AI, shipping production-ready LLM integrations that provide real-world value.
+                </p>
+
+                <div class="mt-4 p-3 rounded-3" style="background: rgba(0, 210, 255, 0.05); border-left: 3px solid var(--accent);">
+                    <p class="small mb-0 text-light italic">
+                        <strong>Current Focus:</strong> Deepening LLM Engineering to build systems where product, engineering, and AI intersect.
+                    </p>
+                </div>
+
+                <a href="/Resume - Eliachar Feig.pdf" target="_blank" class="cv-download-link btn btn-link text-info p5-3 text-decoration-none fw-bold mt-4 mb-5">
+                    Download Full CV <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+
+            <div class="col-lg-5 offset-lg-1" data-aos="fade-left">
+                    <div class="profile-img-container">
+                        <img src="assets/images/profile.JPG" alt="Eliachar Feig">
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="work" class="py-5 ">
+    <div class="container py-4">
+
+        <div class="row align-items-start g-5">
+            <!-- Left intro -->
+            <div class="col-lg-5 work-left">
+                <h6 class="tag mb-2">Experience</h6>
+                <h2 class="display-5 fw-bold mb-4 section-title">Experience in <span class="text-info">Industry</span>.</h2>
+
+                <p class="text-secondary mb-4">
+                    Building production-grade mobile products for enterprise clients where
+                    quality, security, performance, and maintainability are non-negotiable.<br><br>
+                    Operating in high-scale, regulated environments that demand long-term ownership and reliability.
+                </p>
+
+                <div class="mt-4 p-3 rounded-3 work-highlight work-focus">
+                    <p class="small mb-0 text-light">
+                        <strong>Focus:</strong> Product-driven engineering, scalable architecture,
+                        end-to-end delivery, and stability across releases.
+                    </p>
+                </div>
+
+                <!-- Core strengths -->
+                <div class="mt-4 mb-4 work-strengths">
+                    <div class="small text-secondary mb-2">Core strengths</div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info work-badge-item">
+                            iOS (Swift / UIKit / SwiftUI)
+                        </span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info work-badge-item">
+                            Flutter / Dart
+                        </span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info work-badge-item">
+                            Product-driven Engineering
+                        </span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info work-badge-item">
+                            Architecture &amp; State
+                        </span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info work-badge-item">
+                            Performance &amp; Stability
+                        </span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info work-badge-item">
+                            Security &amp; Reliability
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right card -->
+            <div class="col-lg-7">
+                <div class="work-card">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+                        <div>
+                            <h3 class="mb-1 fw-bold">Senior Mobile &amp; Product Engineer</h3>
+                            <div class="text-secondary">
+                                <span class="text-info fw-semibold">Balink LTD</span>
+                                <span class="opacity-50 mx-2">•</span>
+                                <span>2022 – Present</span>
+                            </div>
+                        </div>
+
+                        <div class="work-badge">
+                            <i class="fas fa-briefcase me-2"></i>
+                            Enterprise Mobile
+                        </div>
+                    </div>
+
+                    <hr class="work-divider my-4">
+
+                    <div class="work-points">
+                        <div class="work-point">
+                            <div class="work-point-icon"><i class="fas fa-check"></i></div>
+                            <p class="mb-0 text-secondary">
+                                Shipped and maintained <strong class="text-light">enterprise-scale mobile apps</strong>
+                                for global luxury brands such Cartier, Chanel and Macys's.
+                            </p>
+                        </div>
+
+                        <div class="work-point">
+                            <div class="work-point-icon"><i class="fas fa-check"></i></div>
+                            <p class="mb-0 text-secondary">
+                                Designed <strong class="text-light">complex user flows</strong> and
+                                scalable <strong class="text-light">state management</strong>.
+                            </p>
+                        </div>
+
+                        <div class="work-point">
+                            <div class="work-point-icon"><i class="fas fa-check"></i></div>
+                            <p class="mb-0 text-secondary">
+                                Owned features <strong class="text-light">end-to-end</strong>,
+                                collaborating across product, backend, and design.
+                            </p>
+                        </div>
+
+                        <div class="work-point">
+                            <div class="work-point-icon"><i class="fas fa-check"></i></div>
+                            <p class="mb-0 text-secondary">
+                                Improved <strong class="text-light">performance, stability, and security</strong>
+                                across multiple production releases.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="projects" class="py-1">
+    <div class="container mt-4 py-5">
+
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h6 class="tag">Portfolio</h6>
+            <h2 class="display-6 fw-bold section-title">Recent Projects</h2>
+        </div>
+
+        <div class="swiper projectSwiper">
+            <div class="swiper-wrapper">
+
+                <!-- InnerOrbit -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up">
+
+                        <div class="project-hero"
+                             data-bs-toggle="modal"
+                             data-bs-target="#videoModal"
+                             data-video-id="mvGmHXw_TGo">
+                            <i class="fas fa-mobile-screen-button project-hero-icon"></i>
+                            <div class="project-hero-label">Play Video</div>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">AI & Flutter</span>
+                            <h4 class="mt-2">InnerOrbit</h4>
+                            <p class="small text-secondary mb-3">
+                                InnerOrbit is a full-stack, AI-powered mobile app designed to provide
+                                personalized self-development insights through intelligent data analysis.<br>
+                                Available on Google Play.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-sm btn-info rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#videoModal"
+                                        data-video-id="mvGmHXw_TGo">
+                                    <i class="fas fa-eye me-1"></i> Watch
+                                </button>
+
+                                <a href="https://play.google.com/store/apps/details?id=com.eliachar.feig.innerorbit"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-sm btn-success rounded-pill px-3">
+                                    <i class="fab fa-google-play me-1"></i> Google Play
+                                </a>
+
+
+                                <!--                                <a href="https://github.com/eliacharfe/inner-orbit.git"-->
+<!--                                   target="_blank"-->
+<!--                                   rel="noopener"-->
+<!--                                   class="btn btn-sm btn-outline-light rounded-pill px-3">-->
+<!--                                    <i class="fab fa-github me-1"></i> Github-->
+<!--                                </a>-->
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="innerorbit">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assemble -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="50">
+
+                        <div class="project-hero"
+                             data-bs-toggle="modal"
+                             data-bs-target="#videoModal"
+                             data-video-id="kyKP4AfDlYs">
+                            <i class="fas fa-gamepad project-hero-icon"></i>
+                            <div class="project-hero-label">Play Video</div>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">Unity & C#</span>
+                            <h4 class="mt-2">Assemble Z' Army</h4>
+                            <p class="small text-secondary mb-3">
+                                Real-time multiplayer RTS with synchronized state.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-sm btn-info rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#videoModal"
+                                        data-video-id="kyKP4AfDlYs">
+                                    <i class="fas fa-eye me-1"></i> Watch
+                                </button>
+
+                                <a href="https://github.com/eliacharfe/Assemble-Z-Army.git"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                    <i class="fab fa-github me-1"></i> Github
+                                </a>
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="assemble">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spring Book Store -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+
+                        <div class="project-hero"
+                             data-bs-toggle="modal"
+                             data-bs-target="#videoModal"
+                             data-video-id="QmwvMqvJRSU">
+                            <i class="fas fa-store project-hero-icon"></i>
+                            <div class="project-hero-label">Play Video</div>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">Full Stack</span>
+                            <h4 class="mt-2">Spring Book Store</h4>
+                            <p class="small text-secondary mb-3">
+                                Secure e-commerce backend with auth + transactions.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-sm btn-info rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#videoModal"
+                                        data-video-id="QmwvMqvJRSU">
+                                    <i class="fas fa-eye me-1"></i> Watch
+                                </button>
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="bookstore">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sonic -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="150">
+
+                        <div class="project-hero"
+                             data-bs-toggle="modal"
+                             data-bs-target="#videoModal"
+                             data-video-id="mfwwdH-bD9k">
+                            <i class="fas fa-bolt project-hero-icon"></i>
+                            <div class="project-hero-label">Play Video</div>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">C++ & SFML</span>
+                            <h4 class="mt-2">Sonic Remake</h4>
+                            <p class="small text-secondary mb-3">
+                                OOP game architecture with performance focus.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-sm btn-info rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#videoModal"
+                                        data-video-id="mfwwdH-bD9k">
+                                    <i class="fas fa-eye me-1"></i> Watch
+                                </button>
+
+                                <a href="https://github.com/eliacharfe/Sonic_GAME_OOP2_Project.git"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                    <i class="fab fa-github me-1"></i> Github
+                                </a>
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="sonic">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HousEye -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+
+                        <div class="project-hero"
+                             data-bs-toggle="modal"
+                             data-bs-target="#videoModal"
+                             data-video-id="vXjOUxHrgU0">
+                            <i class="fas fa-microchip project-hero-icon"></i>
+                            <div class="project-hero-label">Play Video</div>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">IoT & Python</span>
+                            <h4 class="mt-2">HousEye</h4>
+                            <p class="small text-secondary mb-3">
+                                Raspberry Pi security with OpenCV + Firebase.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button class="btn btn-sm btn-info rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#videoModal"
+                                        data-video-id="vXjOUxHrgU0">
+                                    <i class="fas fa-eye me-1"></i> Watch
+                                </button>
+
+                                <a href="https://github.com/eliacharfe/HousEye.git"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                    <i class="fab fa-github me-1"></i> Github
+                                </a>
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="houseye">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobileye -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="250">
+
+                        <div class="project-hero no-video">
+                            <i class="fas fa-eye project-hero-icon"></i>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">Computer Vision</span>
+                            <h4 class="mt-2">Mobileye TFL</h4>
+                            <p class="small text-secondary mb-3">
+                                Traffic light detection + distance estimation.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="https://github.com/eliacharfe/Mobileye-Traffic-Lights-Project.git"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                    <i class="fab fa-github me-1"></i> Github
+                                </a>
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="mobileye">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Autocomplete -->
+                <div class="swiper-slide">
+                    <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+
+                        <div class="project-hero no-video">
+                            <i class="fas fa-magnifying-glass project-hero-icon"></i>
+                        </div>
+
+                        <div class="p-4 project-content">
+                            <span class="tag">Algorithms & Python</span>
+                            <h4 class="mt-2">Google Autocomplete</h4>
+                            <p class="small text-secondary mb-3">
+                                Error-tolerant autocomplete under strict constraints.
+                            </p>
+
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="https://github.com/ExcellentTeam22/google-project-group-8"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-sm btn-outline-light rounded-pill px-4">
+                                    <i class="fab fa-github me-1"></i> Github
+                                </a>
+
+                                <button class="btn btn-sm btn-outline-light rounded-pill px-3"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#projectModal"
+                                        data-project="autocomplete">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="swiper-button-next text-info"></div>
+            <div class="swiper-button-prev text-info"></div>
+            <div class="swiper-pagination"></div>
+
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="stopVideo()"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="ratio ratio-16x9">
+                    <iframe id="videoIframe" src="" title="YouTube video" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content project-modal glass-modal border-0">
+            <div class="modal-header border-0">
+                <div>
+                    <h3 class="modal-title mb-1" id="projectModalTitle"></h3>
+                    <div class="small text-secondary" id="projectModalSubtitle"></div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body pt-0">
+                <div class="project-case-grid">
+                    <div class="case-block">
+                        <h6 class="case-title">Problem</h6>
+                        <p class="text-secondary mb-0" id="projectModalProblem"></p>
+                    </div>
+
+                    <div class="case-block">
+                        <h6 class="case-title">Solution</h6>
+                        <p class="text-secondary mb-0" id="projectModalSolution"></p>
+                    </div>
+
+                    <div class="case-block">
+                        <h6 class="case-title">My Role</h6>
+                        <ul class="text-secondary mb-0" id="projectModalRole"></ul>
+                    </div>
+
+                    <div class="case-block">
+                        <h6 class="case-title">Tech Stack</h6>
+                        <div class="d-flex flex-wrap gap-2" id="projectModalStack"></div>
+                    </div>
+
+                    <div class="case-block">
+                        <h6 class="case-title">Impact</h6>
+                        <ul class="text-secondary mb-0" id="projectModalImpact"></ul>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 flex-wrap mt-4">
+                    <a id="projectModalGithub" class="btn btn-sm btn-outline-light rounded-pill px-3 d-none" target="_blank" rel="noopener">
+                        <i class="fab fa-github me-1"></i> Github
+                    </a>
+
+                    <button id="projectModalWatch" class="btn btn-sm btn-info rounded-pill px-3 d-none"
+                            data-bs-toggle="modal" data-bs-target="#videoModal">
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="bg-c1-layer" aria-hidden="true"></div>
+
+<div id="horizontal-wrapper">
+
+    <!-- ================= SKILLS ================= -->
+    <section id="skills" class="panel pt-5 pb-0 mb-0">
+        <div class="container py-5 ">
+            <div class="text-center mb-5 mt-lg-5" data-aos="fade-up">
+                <h6 class="tag">Expertise</h6>
+                <h2 class="display-6 fw-bold section-title">Technical Stack</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="skill-box">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-mobile-alt text-info fs-3 me-3"></i>
+                            <h4 class="mb-0">Mobile Architecture</h4>
+                        </div>
+                        <p class="small text-secondary">Expertise in iOS (Swift/SwiftUI/UIKit) and cross-platform Flutter/Dart. Focus on modular, testable code and high-performance UI.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Swift</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">SwiftUI</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Flutter</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Dart</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-box">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-brain text-info fs-3 me-3"></i>
+                            <h4 class="mb-0">Full-Stack & AI</h4>
+                        </div>
+                        <p class="small text-secondary">Developing LLM-based features and personalized AI insights. Designing APIs and backend logic with Node.js and Spring Boot.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">LLM Integration</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Prompt Eng.</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Node.js</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-box">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-layer-group text-info fs-3 me-3"></i>
+                            <h4 class="mb-0">Product & System Ownership</h4>
+                        </div>
+                        <p class="small text-secondary">Owning features end-to-end - from product thinking and architecture decisions to production delivery.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">System Design</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">API Design</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">End-to-End Delivery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills divider -->
+        <div class="skills-divider ">
+            <span class="skills-divider-line"></span>
+            <span class="skills-divider-icon">
+        <i class="fas fa-layer-group"></i>
+    </span>
+            <span class="skills-divider-line"></span>
+        </div>
+
+
+        <div class="skills-footer mt-3 pt-3">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <p class="text-secondary mb-3">
+                        I don’t treat these as isolated skills - I combine them to design, build,
+                        and ship <strong class="text-light">reliable, scalable products</strong> from idea to production.
+                    </p>
+
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info">Architecture-first</span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info">Performance-aware</span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info">Production-focused</span>
+                        <span class="badge rounded-pill bg-dark border border-secondary text-info">User-centric</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ================= c3.jpg (Track Record unfolds OVER THIS IMAGE) ================= -->
+    <section class="panel image-panel reveal-host">
+        <img src="assets/images/c3.jpg" alt="Creative collaboration" />
+
+        <div class="reveal-overlay">
+            <div class="reveal-card">
+                <div class="container">
+                    <div class="row g-4 text-center">
+                        <div class="col-12 mb-4">
+                            <h6 class="tag">Track Record</h6>
+                            <h2 class="display-6 fw-bold">Impact in Numbers</h2>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="impact-card">
+                                <h3 class="display-4 fw-bold text-info mb-2" data-count="6" data-suffix="+">0+</h3>
+                                <p class="text-uppercase small tracking-widest text-secondary">Software Engineering</p>
+                                <div class="impact-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="impact-card">
+                                <h3 class="display-4 fw-bold text-info mb-2" data-count="50" data-suffix="k+">0k+</h3>
+                                <p class="text-uppercase small tracking-widest text-secondary">Active App Users</p>
+                                <div class="impact-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="impact-card">
+                                <h3 class="display-4 fw-bold text-info mb-2" data-count="100" data-suffix="%">0%</h3>
+                                <p class="text-uppercase small tracking-widest text-secondary">Project Ownership</p>
+                                <div class="impact-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Track Record -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HOW I WORK ================= -->
+    <section id="process" class="panel py-5 mr-0">
+        <div class="container d-flex align-items-center" style="min-height: 100vh;">
+            <div class="w-100">
+                <div class="text-center mb-5">
+                    <h6 class="tag">How I Work</h6>
+                    <h2 class="display-6 fw-bold section-title">
+                        From <span class="text-info">clarity</span> to production.
+                    </h2>
+                    <p class="text-secondary mt-3 mb-0">
+                        A lightweight, product-driven workflow that keeps quality high and cycles fast.
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="process-card process-step">
+                            <div class="process-icon"><i class="fas fa-compass"></i></div>
+                            <h5 class="mb-2">Discover</h5>
+                            <p class="small text-secondary mb-0">
+                                Understand the user, scope, constraints, and success metrics.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="process-card process-step">
+                            <div class="process-icon"><i class="fas fa-sitemap"></i></div>
+                            <h5 class="mb-2">Design</h5>
+                            <p class="small text-secondary mb-0">
+                                Architecture + UX decisions that scale and stay maintainable.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="process-card process-step">
+                            <div class="process-icon"><i class="fas fa-code"></i></div>
+                            <h5 class="mb-2">Build</h5>
+                            <p class="small text-secondary mb-0">
+                                Ship incrementally with strong state management and clean boundaries.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="process-card process-step">
+                            <div class="process-icon"><i class="fas fa-rocket"></i></div>
+                            <h5 class="mb-2">Ship</h5>
+                            <p class="small text-secondary mb-0">
+                                Performance, stability, and release readiness - no surprises.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-values mt-5">
+                    <div class="process-values-inner">
+                        <div class="small text-secondary mb-2 text-center">Working principles</div>
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Architecture-first</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Performance-aware</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Ownership mindset</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">User-centric</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info">Production discipline</span>
+                        </div>
+                    </div>
+
+                    <div class="process-cta mt-4 d-flex justify-content-center">
+                        <a id="letsTalkBtn" href="#contact-slide" class="btn btn-outline-info rounded-pill px-4">
+                            Let’s talk <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= What I'm Learning ================= -->
+    <section id="learning" class="panel py-4 ml-0">
+        <div class="container d-flex align-items-center" style="min-height: 100vh;">
+        <div class="w-100">
+            <div class="text-center mb-4" data-aos="fade-up">
+                <h6 class="tag">Continuous Growth</h6>
+                <h2 class="display-6 fw-bold section-title mb-2">What I'm Learning Now</h2>
+                <p class="text-secondary mt-2 small">Deepening my expertise in the frontier of Artificial Intelligence.</p>
+            </div>
+
+            <div class="row g-3 learning-grid justify-content-center mt-5">
+                <div class="col-lg-4 col-md-6 learning-card-wrapper">
+                    <div class="learning-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="learning-icon me-3"><i class="fas fa-brain"></i></div>
+                            <h4 class="mb-0">LLM & RAG</h4>
+                        </div>
+                        <p class="small text-secondary mb-3">Building robust retrieval systems to ground LLMs in private data.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">Vector DBs</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">LangChain</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 learning-card-wrapper">
+                    <div class="learning-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="learning-icon me-3"><i class="fas fa-sliders-h"></i></div>
+                            <h4 class="mb-0">Fine-tuning & LoRA</h4>
+                        </div>
+                        <p class="small text-secondary mb-3">Optimizing performance using PEFT and Low-Rank Adaptation.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">PyTorch</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info small">HuggingFace</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 learning-card-wrapper">
+                    <div class="learning-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="learning-icon me-3"><i class="fas fa-robot"></i></div>
+                            <h4 class="mb-0">AI Agents</h4>
+                        </div>
+                        <p class="small text-secondary mb-3">Designing autonomous systems capable of planning and tool-use.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">AutoGPT</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info small">Function Calling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 learning-card-wrapper">
+                    <div class="learning-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="learning-icon me-3"><i class="fas fa-network-wired"></i></div>
+                            <h4 class="mb-0">Deep Learning</h4>
+                        </div>
+                        <p class="small text-secondary mb-3">Mastering neural architectures and attention mechanisms.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">PyTorch</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">Transformers</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">Neural Nets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 learning-card-wrapper">
+                    <div class="learning-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="learning-icon me-3"><i class="fas fa-magic"></i></div>
+                            <h4 class="mb-0">Generative AI</h4>
+                        </div>
+                        <p class="small text-secondary mb-3">Exploring diffusion models and transformer architectures.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">Diffusion</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">GANs</span>
+                            <span class="badge rounded-pill bg-dark border border-secondary text-info x-small">Multi-modal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+
+    <section class="panel bg-reveal-c1"></section>
+
+    <!-- ================= Contact Me ================= -->
+    <section id="contact-slide" class="py-5 panel">
+        <div class="container d-flex align-items-center" style="min-height: 100vh;">
+            <div class="row w-100 g-5 align-items-center">
+                <div class="col-lg-5" data-aos="fade-right">
+                    <h6 class="tag">Contact</h6>
+                    <h2 class="display-5 fw-bold mb-4">Let's build something <span class="text-info">extraordinary</span>.</h2>
+                    <p class="text-secondary mb-4">Whether it's a senior role, an AI-driven project, or just a technical deep-dive, my inbox is always open.</p>
+
+                    <div class="contact-info-item d-flex align-items-center mb-3">
+                        <div class="icon-box me-3"><i class="fas fa-envelope text-info"></i></div>
+                        <span>eliacharfeig@gmail.com</span>
+                    </div>
+                    <div class="contact-info-item d-flex align-items-center">
+                        <div class="icon-box me-3"><i class="fab fa-linkedin-in text-info"></i></div>
+                        <span>linkedin.com/in/eliachar-feig</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+                    <div class="contact-form-card">
+                        <form id="contact-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small text-secondary mb-2">Your Name</label>
+                                        <input type="text" class="form-control custom-input" placeholder="John Doe">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="small text-secondary mb-2">Email Address</label>
+                                        <input type="email" class="form-control custom-input" placeholder="name@company.com">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="small text-secondary mb-2">Subject</label>
+                                        <input type="text" class="form-control custom-input" placeholder="How can I help?">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="small text-secondary mb-2">Message</label>
+                                        <textarea class="form-control custom-input" rows="4" placeholder="Tell me about your project..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-pro w-100" style="padding: 16px 0; border-radius: 50px;">
+                                        <span>Send Message</span>
+                                        <i class="fas fa-paper-plane ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<div id="success-toast" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+    <div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="fas fa-check-circle me-2"></i> Message sent successfully! I'll get back to you soon.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<section class="ai-signature">
+    <img
+            src="assets/images/ai-portrait-wide.png"
+            alt="AI-generated portrait representing my work in mobile engineering and applied AI"
+    />
+    <div class="ai-signature-caption">
+        AI-generated portrait reflecting my work at the intersection of
+        <span class="accent">mobile engineering, applied AI</span>,
+        and human-centered products.
+    </div>
+</section>
+
+<footer class="py-5 bg-black border-top border-secondary">
+    <div class="container text-center">
+        <h2 class="mb-4">Let's Connect</h2>
+        <div class="d-flex justify-content-center gap-4 mb-4">
+            <a href="mailto:eliacharfeig@gmail.com" class="text-info fs-3"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/eliachar-feig/" target="_blank" class="text-info fs-3"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/eliacharfe" target="_blank" class="text-info fs-3"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="text-secondary small">Copyright © 2026 Eliachar Feig. All rights reserved. <br>Built with Passion & Code.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+<script src="js/main.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        const wrapper = document.querySelector("#horizontal-wrapper");
+        const panels  = gsap.utils.toArray("#horizontal-wrapper .panel");
+        const bgC1    = document.querySelector("#bg-c1-layer");
+
+        ScrollTrigger.matchMedia({
+            "(min-width: 992px)": () => {
+
+                let isNavScrolling = false;
+
+
+                const horizontalTween = gsap.to(panels, {
+                    xPercent: -100 * (panels.length - 1),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: wrapper,
+                        pin: true,
+                        scrub: 1,
+                        // snap: panels.length > 1 ? 1 / (panels.length - 1) : 1,
+                        snap: panels.length > 1 ? {
+                            snapTo: (value) => {
+                                if (isNavScrolling) return value;
+                                return gsap.utils.snap(1 / (panels.length - 1), value);
+                            },
+                            duration: 0.35,
+                            delay: 0.0,
+                            ease: "power2.out"
+                        } : 1,
+
+                        end: () => "+=" + (wrapper.scrollWidth - window.innerWidth)
+                    }
+                });
+
+                const processSection = document.querySelector("#process");
+                if (processSection) {
+                    const steps = gsap.utils.toArray("#process .process-step");
+
+                    // entrance
+                    gsap.set(steps, { autoAlpha: 0, y: 30 });
+
+                    ScrollTrigger.batch(steps, {
+                        containerAnimation: horizontalTween,
+                        start: "left 80%",
+                        onEnter: (batch) => {
+                            gsap.to(batch, {
+                                autoAlpha: 1,
+                                y: 0,
+                                duration: 0.7,
+                                ease: "power2.out",
+                                stagger: 0.12,
+                                overwrite: true
+                            });
+                        },
+                        onEnterBack: (batch) => {
+                            gsap.to(batch, {
+                                autoAlpha: 1,
+                                y: 0,
+                                duration: 0.7,
+                                ease: "power2.out",
+                                stagger: 0.10,
+                                overwrite: true
+                            });
+                        }
+                    });
+
+                    const values = processSection.querySelector(".process-values-inner");
+                    if (values) {
+                        gsap.set(values, { autoAlpha: 0, y: 18 });
+
+                        ScrollTrigger.create({
+                            trigger: processSection,
+                            containerAnimation: horizontalTween,
+                            start: "center 70%",
+                            onEnter: () => gsap.to(values, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out" }),
+                            onEnterBack: () => gsap.to(values, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power2.out" })
+                        });
+                    }
+                }
+
+                const learningSection = document.querySelector("#learning");
+                if (learningSection) {
+                    const learningHeader = learningSection.querySelector(".text-center");
+                    const learningCards  = gsap.utils.toArray("#learning .learning-card-wrapper");
+
+                    if (learningHeader) gsap.set(learningHeader, { autoAlpha: 0, y: 18 });
+                    gsap.set(learningCards, { autoAlpha: 0, y: 28 });
+
+                    ScrollTrigger.create({
+                        trigger: learningSection,
+                        containerAnimation: horizontalTween,
+                        start: "left 70%",
+
+                        onEnter: () => {
+                            if (learningHeader)
+                                gsap.to(learningHeader, {
+                                    autoAlpha: 1,
+                                    y: 0,
+                                    duration: 0.7,
+                                    ease: "power2.out"
+                                });
+
+                            gsap.to(learningCards, {
+                                autoAlpha: 1,
+                                y: 0,
+                                duration: 0.7,
+                                ease: "power2.out",
+                                stagger: 0.12,
+                                delay: 0.08
+                            });
+                        },
+
+                        onEnterBack: () => {
+                            if (learningHeader)
+                                gsap.to(learningHeader, {
+                                    autoAlpha: 1,
+                                    y: 0,
+                                    duration: 0.7,
+                                    ease: "power2.out"
+                                });
+
+                            gsap.to(learningCards, {
+                                autoAlpha: 1,
+                                y: 0,
+                                duration: 0.7,
+                                ease: "power2.out",
+                                stagger: 0.10,
+                                delay: 0.06
+                            });
+                        },
+
+                        onLeave: () => {
+                            if (learningHeader)
+                                gsap.set(learningHeader, { autoAlpha: 0, y: 18 });
+
+                            gsap.set(learningCards, { autoAlpha: 0, y: 28 });
+                        },
+
+                        onLeaveBack: () => {
+                            if (learningHeader)
+                                gsap.set(learningHeader, { autoAlpha: 0, y: 18 });
+
+                            gsap.set(learningCards, { autoAlpha: 0, y: 28 });
+                        }
+                    });
+
+                }
+
+
+                function scrollToPanel(panelEl) {
+                    const st = horizontalTween.scrollTrigger;
+
+                    st.refresh();
+
+                    const index = panels.indexOf(panelEl);
+                    if (index < 0) return;
+
+                    const last = panels.length - 1;
+                    let progress = (last === 0) ? 0 : index / last;
+
+                    const epsilon = 0.001;
+                    if (index < last) progress = Math.min(progress + epsilon, 1);
+                    else progress = Math.max(progress - epsilon, 0);
+
+                    const y = st.start + (st.end - st.start) * progress;
+
+
+                    isNavScrolling = true;
+
+                    gsap.to(window, {
+                        scrollTo: y,
+                        duration: 0.9,
+                        ease: "power2.inOut",
+                        overwrite: "auto",
+                        onComplete: () => {
+                            setTimeout(() => {
+                                isNavScrolling = false;
+                            }, 150);
+                        }
+                    });
+                }
+
+
+                const aboutLink = document.querySelector('a.nav-link[href="#about"]');
+                if (aboutLink) {
+                    aboutLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        gsap.to(window, {
+                            scrollTo: { y: "#about", offsetY: 70 },
+                            duration: 0.9,
+                            ease: "power2.inOut"
+                        });
+                    });
+                }
+
+                const workLink = document.querySelector('a.nav-link[href="#work"]');
+                if (workLink) {
+                    workLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        gsap.to(window, {
+                            scrollTo: { y: "#work", offsetY: 60 },
+                            duration: 0.9,
+                            ease: "power2.inOut"
+                        });
+                    });
+                }
+
+                const projectsLink = document.querySelector('a.nav-link[href="#projects"]');
+                if (projectsLink) {
+                    projectsLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        gsap.to(window, {
+                            scrollTo: { y: "#projects", offsetY: 30 },
+                            duration: 0.9,
+                            ease: "power2.inOut"
+                        });
+                    });
+                }
+
+                const heroLink = document.querySelector('a.nav-link[href="#hero"]');
+                if (heroLink) {
+                    heroLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        gsap.to(window, {
+                            scrollTo: { y: "#", offsetY: 0 },
+                            duration: 0.9,
+                            ease: "power2.inOut"
+                        });
+                    });
+                }
+
+
+                const skillsLink = document.querySelector('a.nav-link[href="#skills"]');
+                if (skillsLink) {
+                    skillsLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        const panel = document.querySelector("#horizontal-wrapper #skills");
+                        if (panel) scrollToPanel(panel);
+                    });
+                }
+
+                const learningLink = document.querySelector('a.nav-link[href="#learning"]');
+                if (learningLink) {
+                    learningLink.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        const panel = document.querySelector("#horizontal-wrapper #learning");
+                        if (panel) scrollToPanel(panel);
+                    });
+                }
+
+                const letsTalkBtn = document.querySelector("#letsTalkBtn");
+                if (letsTalkBtn) {
+                    letsTalkBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        const panel = document.querySelector("#horizontal-wrapper #contact-slide");
+                        if (panel) scrollToPanel(panel);
+                    });
+                }
+
+                gsap.utils.toArray(".reveal-host").forEach((host) => {
+                    const card = host.querySelector(".reveal-card");
+                    if (!card) return;
+
+                    gsap.set(card, { yPercent: 120 });
+
+                    gsap.to(card, {
+                        yPercent: 0,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: host,
+                            containerAnimation: horizontalTween,
+                            start: "left 75%",
+                            end: "center 60%",
+                            scrub: true
+                        }
+                    });
+                });
+
+                if (bgC1) {
+                    gsap.set(bgC1, { autoAlpha: 0, x: 0 });
+
+                    ScrollTrigger.create({
+                        trigger: ".reveal-host",
+                        containerAnimation: horizontalTween,
+                        start: "left left",
+                        endTrigger: "#contact-slide",
+                        end: "right left",
+                        onEnter: () => gsap.to(bgC1, { autoAlpha: 1, duration: 0.2, overwrite: true }),
+                        onEnterBack: () => gsap.to(bgC1, { autoAlpha: 1, duration: 0.2, overwrite: true }),
+                        onLeave: () => gsap.to(bgC1, { autoAlpha: 0, duration: 0.2, overwrite: true }),
+                        onLeaveBack: () => gsap.to(bgC1, { autoAlpha: 0, duration: 0.2, overwrite: true })
+                    });
+
+                    gsap.to(bgC1, {
+                        x: 90,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: "#contact-slide",
+                            containerAnimation: horizontalTween,
+                            start: "left left",
+                            end: "right left",
+                            scrub: true
+                        }
+                    });
+                }
+            },
+
+            "(max-width: 991.98px)": () => {
+                gsap.utils.toArray(".panel").forEach(p => gsap.set(p, { clearProps: "transform" }));
+                gsap.utils.toArray(".reveal-card").forEach(c => gsap.set(c, { clearProps: "transform" }));
+                if (bgC1) gsap.set(bgC1, { autoAlpha: 0, x: 0 });
+
+                gsap.set("#process .process-step", { autoAlpha: 0, y: 24 });
+                ScrollTrigger.batch("#process .process-step", {
+                    start: "top 80%",
+                    onEnter: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out", stagger: 0.12 }),
+                    onEnterBack: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out", stagger: 0.10 })
+                });
+
+                gsap.set("#process .process-values-inner", { autoAlpha: 0, y: 18 });
+                ScrollTrigger.create({
+                    trigger: "#process .process-values-inner",
+                    start: "top 85%",
+                    onEnter: () => gsap.to("#process .process-values-inner", { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out" }),
+                    onEnterBack: () => gsap.to("#process .process-values-inner", { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out" })
+                });
+
+                gsap.set("#learning .text-center", { autoAlpha: 0, y: 18 });
+                gsap.set("#learning .learning-card-wrapper", { autoAlpha: 0, y: 24 });
+
+                ScrollTrigger.create({
+                    trigger: "#learning",
+                    start: "top 75%",
+                    onEnter: () => gsap.to("#learning .text-center", { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out" }),
+                    onEnterBack: () => gsap.to("#learning .text-center", { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out" })
+                });
+
+                ScrollTrigger.batch("#learning .learning-card-wrapper", {
+                    start: "top 80%",
+                    onEnter: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out", stagger: 0.12 }),
+                    onEnterBack: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.65, ease: "power2.out", stagger: 0.10 })
+                });
+
+                gsap.set("#contact-slide .col-lg-5", { autoAlpha: 0, x: -20 });
+                gsap.set("#contact-slide .col-lg-7", { autoAlpha: 0, x:  20 });
+                gsap.set("#contact-slide .contact-info-item", { autoAlpha: 0, y: 12 });
+
+                ScrollTrigger.create({
+                    trigger: "#contact-slide",
+                    start: "top 75%",
+                    onEnter: () => {
+                        gsap.to("#contact-slide .col-lg-5", { autoAlpha: 1, x: 0, duration: 0.7, ease: "power2.out" });
+                        gsap.to("#contact-slide .col-lg-7", { autoAlpha: 1, x: 0, duration: 0.7, ease: "power2.out", delay: 0.05 });
+                        gsap.to("#contact-slide .contact-info-item", { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out", stagger: 0.10, delay: 0.12 });
+                    },
+                    onEnterBack: () => {
+                        gsap.to("#contact-slide .col-lg-5", { autoAlpha: 1, x: 0, duration: 0.7, ease: "power2.out" });
+                        gsap.to("#contact-slide .col-lg-7", { autoAlpha: 1, x: 0, duration: 0.7, ease: "power2.out", delay: 0.05 });
+                        gsap.to("#contact-slide .contact-info-item", { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out", stagger: 0.10, delay: 0.10 });
+                    }
+                });
+
+            }
+        });
+    });
+
+
+</script>
+
+</body>
+</html>
