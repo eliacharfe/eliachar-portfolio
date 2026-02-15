@@ -1,9 +1,10 @@
-
 // components/Contact.tsx
+
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useC1Background } from "@/hooks/useC1Background";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
     const [form, setForm] = useState({
@@ -12,6 +13,11 @@ export default function Contact() {
         subject: "",
         message: "",
     });
+
+    type SendState = "idle" | "sending" | "sent" | "error";
+
+    const [sendState, setSendState] = useState<SendState>("idle");
+    const [toastOpen, setToastOpen] = useState(false);
 
     function handleChange(
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -22,18 +28,83 @@ export default function Contact() {
         }));
     }
 
-    function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        console.log("Contact form submitted:", form);
+        console.groupCollapsed("%c[Contact] SUBMIT", "color:#22c55e;font-weight:700");
+        console.log("✅ onSubmit fired");
+        console.log("form:", form);
 
-        setForm({
-            name: "",
-            email: "",
-            subject: "",
-            message: "",
+        if (sendState === "sending") {
+            console.log("⛔ Already sending, skipping.");
+            console.groupEnd();
+            return;
+        }
+
+        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+
+        console.log("env:", {
+            hasPublicKey: !!publicKey,
+            hasServiceId: !!serviceId,
+            hasTemplateId: !!templateId,
+            publicKeyPreview: publicKey ? publicKey.slice(0, 5) + "…" : null,
+            serviceId,
+            templateId,
         });
+
+        if (!publicKey || !serviceId || !templateId) {
+            console.error("❌ Missing EmailJS env vars (.env.local). Restart dev server.");
+            setSendState("error");
+            alert("Missing EmailJS env vars. Check console + restart dev server.");
+            console.groupEnd();
+            return;
+        }
+
+        setSendState("sending");
+        console.log("➡️ setSendState('sending')");
+
+        const templateParams = {
+            from_name: form.name,
+            reply_to: form.email,
+            subject: form.subject,
+            message: form.message,
+        };
+
+        console.log("templateParams:", templateParams);
+        console.log("🚀 calling emailjs.send(...)");
+
+        try {
+            const res = await emailjs.send(serviceId, templateId, templateParams, {
+                publicKey,
+            });
+
+            console.log("✅ EmailJS success:", res);
+
+            setSendState("sent");
+            setToastOpen(true);
+
+            setForm({ name: "", email: "", subject: "", message: "" });
+            console.log("🧹 cleared form");
+
+            window.setTimeout(() => setSendState("idle"), 2500);
+            console.groupEnd();
+        } catch (err) {
+            console.error("❌ EmailJS failed:", err);
+            setSendState("error");
+            alert("Email failed to send. Open console for details.");
+            window.setTimeout(() => setSendState("idle"), 2500);
+            console.groupEnd();
+        }
     }
+
+    useEffect(() => {
+        if (!toastOpen) return;
+        const t = window.setTimeout(() => setToastOpen(false), 4500);
+        return () => window.clearTimeout(t);
+    }, [toastOpen]);
+
 
     const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -41,6 +112,34 @@ export default function Contact() {
 
     return (
         <section id="contact-slide" className="py-5 panel" ref={sectionRef}>
+
+            {/* Success popup / toast */}
+            <div
+                className="position-fixed bottom-0 end-0 p-3"
+                style={{ zIndex: 9999 }}
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                <div
+                    className={`toast align-items-center text-white bg-success border-0 ${toastOpen ? "show" : "hide"
+                        }`}
+                    role="alert"
+                >
+                    <div className="d-flex">
+                        <div className="toast-body">
+                            <i className="fas fa-check-circle me-2" />
+                            Mail sent successfully! I&apos;ll get back to you soon.
+                        </div>
+                        <button
+                            type="button"
+                            className="btn-close btn-close-white me-2 m-auto"
+                            aria-label="Close"
+                            onClick={() => setToastOpen(false)}
+                        />
+                    </div>
+                </div>
+            </div>
+
 
 
             <div className="container d-flex align-items-center" style={{ minHeight: "100vh" }}>
@@ -148,12 +247,23 @@ export default function Contact() {
                                     <div className="col-12 mt-4">
                                         <button
                                             type="submit"
+                                            disabled={sendState === "sending"}
                                             className="btn btn-pro w-100"
-                                            style={{ padding: "16px 0", borderRadius: "50px" }}
+                                            style={{ padding: "16px 0", borderRadius: "50px", opacity: sendState === "sending" ? 0.85 : 1 }}
                                         >
-                                            <span>Send Message</span>
-                                            <i className="fas fa-paper-plane ms-2" />
+                                            {sendState === "sending" ? (
+                                                <>
+                                                    <span>Sending...</span>
+                                                    <i className="fas fa-spinner fa-spin ms-2" />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span>Send Message</span>
+                                                    <i className="fas fa-paper-plane ms-2" />
+                                                </>
+                                            )}
                                         </button>
+
                                     </div>
                                 </div>
                             </form>
@@ -163,5 +273,7 @@ export default function Contact() {
                 </div>
             </div>
         </section>
+
+
     );
 }
