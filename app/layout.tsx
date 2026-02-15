@@ -8,6 +8,7 @@ import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import CursorFX from "@/components/CursorFX";
 import MagneticButtons from "@/components/MagneticButtons";
+import ChatWidget from "@/components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +53,8 @@ export default function RootLayout({
         <MagneticButtons />
 
         {children}
+
+        <ChatWidget />
 
       </body>
     </html>

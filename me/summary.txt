@@ -1,0 +1,7 @@
+My name is Eliachar Feig. I’m a Senior Mobile Engineer focused on iOS and Flutter, with a strong product mindset and growing expertise in applied AI. I’m based in Jerusalem, where I build scalable, user-facing applications that connect frontend, backend, and intelligent systems into real-world products.
+
+My background started in mobile development — Swift, SwiftUI, UIKit, and Flutter — building production-grade apps used in enterprise environments, including global luxury brands. Over time, I naturally moved toward full ownership: designing APIs, integrating backend services, and delivering features end-to-end from architecture to release.
+
+Recently, I built and shipped my own AI-powered mobile app on Google Play using Flutter and Firebase, integrating LLM-based features for personalized insights and workflow automation. That experience deepened my interest in applied AI and product-driven engineering — not just writing code, but building complete systems people actually use.
+
+I speak French and Hebrew natively, English professionally, and I’m always curious about how technology, product thinking, and AI can intersect to create meaningful tools.
