@@ -1,4 +1,4 @@
-// app/api/chat/route.ts
+
 import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
@@ -55,24 +55,16 @@ function buildEmailSubject(kind?: "lead" | "unknown") {
     return "Chatbot notification";
 }
 
-/**
- * Turns Msg[] into a readable transcript (text).
- */
 function formatConversationText(messages: ChatMsg[]) {
     const SEP = "\n────────────\n";
     const title = "──────────── Chat Transcript ────────────\n";
-
     const blocks = messages.map((m) => {
         const who = m.role === "user" ? "🧑 User" : "🤖 Assistant";
         return `${who}\n${m.content.trim()}`;
     });
-
     return title + "\n" + blocks.join(SEP) + "\n";
 }
 
-/**
- * Turns Msg[] into a readable transcript (HTML).
- */
 function escapeHtml(s: string) {
     return s
         .replaceAll("&", "&amp;")
@@ -88,7 +80,6 @@ function formatConversationHtml(messages: ChatMsg[]) {
             const isUser = m.role === "user";
             const label = isUser ? "🧑 User" : "🤖 Assistant";
             const content = escapeHtml(m.content.trim()).replaceAll("\n", "<br/>");
-
             return `
         <div style="margin: 14px 0;">
           <div style="font-weight:700; margin-bottom:6px;">${label}</div>
@@ -127,7 +118,7 @@ async function sendAlertEmail(subject: string, text: string, html?: string) {
     });
 
     if (!host || !user || !pass || !to) {
-        log("Email not configured (missing SMTP_HOST/SMTP_USER/SMTP_PASS/ALERT_TO)");
+        log("Email not configured");
         return;
     }
 
@@ -139,7 +130,6 @@ async function sendAlertEmail(subject: string, text: string, html?: string) {
     });
 
     await transporter.verify();
-    log("SMTP verify OK");
 
     const info = await transporter.sendMail({
         from: `"Eliachar Website Bot" <${user}>`,
@@ -152,7 +142,12 @@ async function sendAlertEmail(subject: string, text: string, html?: string) {
     log("Email sent:", { messageId: info.messageId, to, subject });
 }
 
-async function push(text: string, messages: ChatMsg[], kind?: "lead" | "unknown") {
+async function push(
+    text: string,
+    messages: ChatMsg[],
+    kind?: "lead" | "unknown",
+    notifyUI?: (payload: any) => void
+) {
     const token = process.env.PUSHOVER_TOKEN;
     const pushoverUser = process.env.PUSHOVER_USER;
 
@@ -162,12 +157,9 @@ async function push(text: string, messages: ChatMsg[], kind?: "lead" | "unknown"
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({ token, user: pushoverUser, message: text }),
         });
-    } else {
-        log("Pushover not configured (missing PUSHOVER_TOKEN or PUSHOVER_USER)");
     }
 
     const subject = buildEmailSubject(kind);
-
     const transcriptText = formatConversationText(messages);
     const transcriptHtml = formatConversationHtml(messages);
 
@@ -183,19 +175,42 @@ async function push(text: string, messages: ChatMsg[], kind?: "lead" | "unknown"
 
     try {
         await sendAlertEmail(subject, bodyText, bodyHtml);
+        notifyUI?.({
+            type: "push_success",
+            title: "Conversation sent successfully",
+            message: "The conversation was sent successfully.",
+            html: bodyHtml,
+        });
     } catch (e: any) {
-        log("sendAlertEmail failed:", e?.message || e);
+        notifyUI?.({
+            type: "push_error",
+            title: "Send failed",
+            message: e?.message || "Failed to send the conversation.",
+        });
     }
 }
 
-async function record_user_details(args: { email: string; name?: string; notes?: string }, messages: ChatMsg[]) {
+async function record_user_details(
+    args: { email: string; name?: string; notes?: string },
+    messages: ChatMsg[],
+    notifyUI?: (payload: any) => void
+) {
     const { email, name = "Name not provided", notes = "not provided" } = args;
-    await push(`Lead captured: ${email} (${name}) | notes: ${notes}`, messages, "lead");
+    await push(
+        `Lead captured: ${email} (${name}) | notes: ${notes}`,
+        messages,
+        "lead",
+        notifyUI
+    );
     return { recorded: "ok" };
 }
 
-async function record_unknown_question(args: { question: string }, messages: ChatMsg[]) {
-    await push(`Unknown question: ${args.question}`, messages, "unknown");
+async function record_unknown_question(
+    args: { question: string },
+    messages: ChatMsg[],
+    notifyUI?: (payload: any) => void
+) {
+    await push(`Unknown question: ${args.question}`, messages, "unknown", notifyUI);
     return { recorded: "ok" };
 }
 
@@ -208,9 +223,9 @@ const tools: OpenAI.Responses.Tool[] = [
         parameters: {
             type: "object",
             properties: {
-                email: { type: "string", description: "The email address of this user" },
-                name: { type: "string", description: "The user's name, if they provided it" },
-                notes: { type: "string", description: "Any additional info worth recording" },
+                email: { type: "string" },
+                name: { type: "string" },
+                notes: { type: "string" },
             },
             required: ["email"],
             additionalProperties: false,
@@ -220,7 +235,7 @@ const tools: OpenAI.Responses.Tool[] = [
         type: "function",
         name: "record_unknown_question",
         strict: true,
-        description: "Always use this tool to record any question that couldn't be answered as you didn't know the answer",
+        description: "Always use this tool to record any question that couldn't be answered",
         parameters: {
             type: "object",
             properties: { question: { type: "string" } },
@@ -230,7 +245,11 @@ const tools: OpenAI.Responses.Tool[] = [
     },
 ];
 
-async function runToolCalls(output: any[], messages: ChatMsg[]) {
+async function runToolCalls(
+    output: any[],
+    messages: ChatMsg[],
+    notifyUI?: (payload: any) => void
+) {
     const toolOutputs: any[] = [];
 
     for (const item of output) {
@@ -246,11 +265,11 @@ async function runToolCalls(output: any[], messages: ChatMsg[]) {
             args = {};
         }
 
-        log("Tool called:", name, "args:", args);
-
         let result: any = {};
-        if (name === "record_user_details") result = await record_user_details(args, messages);
-        else if (name === "record_unknown_question") result = await record_unknown_question(args, messages);
+        if (name === "record_user_details")
+            result = await record_user_details(args, messages, notifyUI);
+        else if (name === "record_unknown_question")
+            result = await record_unknown_question(args, messages, notifyUI);
         else result = { recorded: "ignored_unknown_tool" };
 
         toolOutputs.push({
@@ -277,49 +296,34 @@ function sseData(obj: any) {
 }
 
 export async function POST(req: Request) {
-    const started = Date.now();
-
     const stream = new ReadableStream<Uint8Array>({
         async start(controller) {
             const enc = new TextEncoder();
             const send = (obj: any) => controller.enqueue(enc.encode(sseData(obj)));
+            const notifyUI = (payload: any) => send(payload);
 
             try {
-                log("POST start (stream)");
-
                 const apiKey = process.env.OPENAI_API_KEY;
-                log("OPENAI_API_KEY present?", Boolean(apiKey), "length:", apiKey?.length ?? 0);
-
                 if (!apiKey) {
-                    send({ type: "error", message: "OPENAI_API_KEY is missing in server env." });
+                    send({ type: "error", message: "OPENAI_API_KEY missing" });
                     send("[DONE]");
                     controller.close();
                     return;
                 }
 
                 const openai = new OpenAI({ apiKey });
-
                 const body = await req.json().catch(() => null);
-                if (!body) {
-                    send({ type: "error", message: "Invalid JSON body" });
+
+                if (!body || !Array.isArray(body.messages) || !body.messages.length) {
+                    send({ type: "error", message: "Invalid messages" });
                     send("[DONE]");
                     controller.close();
                     return;
                 }
 
-                const messages = (body?.messages ?? []) as ChatMsg[];
-                if (!Array.isArray(messages) || messages.length === 0) {
-                    send({ type: "error", message: "No messages provided" });
-                    send("[DONE]");
-                    controller.close();
-                    return;
-                }
-
+                const messages = body.messages as ChatMsg[];
                 const transcript = messages.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
                 const system = buildSystemPrompt();
-
-                log("Transcript length:", transcript.length);
-                log("System prompt length:", system.length);
 
                 const response = await openai.responses.create({
                     model: "gpt-4o-mini",
@@ -344,14 +348,12 @@ export async function POST(req: Request) {
 
                     if (event?.type === "response.function_call_arguments.delta") {
                         const last = toolCallItems[toolCallItems.length - 1];
-                        if (last) {
-                            last.arguments = (last.arguments || "") + (event?.delta || "");
-                        }
+                        if (last) last.arguments = (last.arguments || "") + (event?.delta || "");
                     }
 
                     if (event?.type === "response.completed") {
                         if (toolCallItems.length) {
-                            const toolOutputs = await runToolCalls(toolCallItems, messages);
+                            const toolOutputs = await runToolCalls(toolCallItems, messages, notifyUI);
 
                             const followup = await openai.responses.create({
                                 model: "gpt-4o-mini",
@@ -377,10 +379,8 @@ export async function POST(req: Request) {
 
                 send("[DONE]");
                 controller.close();
-                log("Stream done ms:", Date.now() - started);
             } catch (err: any) {
-                console.error("[api/chat] STREAM ERROR:", err);
-                send({ type: "error", message: err?.message || "Server error while calling the AI." });
+                send({ type: "error", message: err?.message || "Server error" });
                 send("[DONE]");
                 controller.close();
             }
