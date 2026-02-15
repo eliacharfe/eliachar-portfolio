@@ -30,10 +30,7 @@ function buildSystemPrompt() {
     const summary = readFileSafe(summaryPath);
     const linkedin = readFileSafe(linkedinPath);
 
-    log("Loaded context lengths:", {
-        summary: summary.length,
-        linkedin: linkedin.length,
-    });
+    log("Loaded context lengths:", { summary: summary.length, linkedin: linkedin.length });
 
     return `You are acting as ${name}. You are answering questions on ${name}'s website,
 particularly questions related to ${name}'s career, background, skills and experience.
@@ -64,11 +61,7 @@ async function push(text: string) {
     await fetch("https://api.pushover.net/1/messages.json", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-            token,
-            user,
-            message: text,
-        }),
+        body: new URLSearchParams({ token, user, message: text }),
     });
 }
 
@@ -95,10 +88,7 @@ const tools: OpenAI.Responses.Tool[] = [
             properties: {
                 email: { type: "string", description: "The email address of this user" },
                 name: { type: "string", description: "The user's name, if they provided it" },
-                notes: {
-                    type: "string",
-                    description: "Any additional info about the conversation worth recording",
-                },
+                notes: { type: "string", description: "Any additional info worth recording" },
             },
             required: ["email"],
             additionalProperties: false,
@@ -112,15 +102,12 @@ const tools: OpenAI.Responses.Tool[] = [
             "Always use this tool to record any question that couldn't be answered as you didn't know the answer",
         parameters: {
             type: "object",
-            properties: {
-                question: { type: "string", description: "The question that couldn't be answered" },
-            },
+            properties: { question: { type: "string" } },
             required: ["question"],
             additionalProperties: false,
         },
     },
 ];
-
 
 async function runToolCalls(output: any[]) {
     const toolOutputs: any[] = [];
@@ -155,133 +142,131 @@ async function runToolCalls(output: any[]) {
     return toolOutputs;
 }
 
-function safeError(err: any) {
+function sseHeaders() {
     return {
-        name: err?.name,
-        message: err?.message,
-        status: err?.status,
-        code: err?.code,
-        type: err?.type,
+        "Content-Type": "text/event-stream; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
+        "X-Accel-Buffering": "no",
     };
+}
+
+function sseData(obj: any) {
+    return `data: ${typeof obj === "string" ? obj : JSON.stringify(obj)}\n\n`;
 }
 
 export async function POST(req: Request) {
     const started = Date.now();
 
-    try {
-        log("POST start");
+    const stream = new ReadableStream<Uint8Array>({
+        async start(controller) {
+            const enc = new TextEncoder();
 
-        const apiKey = process.env.OPENAI_API_KEY;
-        log("OPENAI_API_KEY present?", Boolean(apiKey), "length:", apiKey?.length ?? 0);
+            const send = (obj: any) => controller.enqueue(enc.encode(sseData(obj)));
 
-        if (!apiKey) {
-            return Response.json(
-                { reply: "", error: "OPENAI_API_KEY is missing in server env (.env.local / Vercel env vars)." },
-                { status: 500 }
-            );
-        }
+            try {
+                log("POST start (stream)");
 
-        const openai = new OpenAI({ apiKey });
+                const apiKey = process.env.OPENAI_API_KEY;
+                log("OPENAI_API_KEY present?", Boolean(apiKey), "length:", apiKey?.length ?? 0);
 
-        const body = await req.json().catch(() => null);
-        if (!body) {
-            log("Failed to parse JSON body");
-            return Response.json({ reply: "", error: "Invalid JSON body" }, { status: 400 });
-        }
-
-        const messages = (body?.messages ?? []) as ChatMsg[];
-        log("Messages count:", messages.length);
-
-        if (!Array.isArray(messages) || messages.length === 0) {
-            return Response.json({ reply: "", error: "No messages provided" }, { status: 400 });
-        }
-
-        const transcript = messages.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
-        const system = buildSystemPrompt();
-
-        log("Transcript length:", transcript.length);
-        log("System prompt length:", system.length);
-
-        log("Calling OpenAI responses.create...");
-        let response = await openai.responses.create({
-            model: "gpt-4o-mini",
-            tools,
-            input: `${system}\n\n---\n\n${transcript}\nASSISTANT:`,
-        });
-
-        log("OpenAI response id:", response.id);
-        log("OpenAI output items:", response.output?.length ?? 0);
-
-        let loops = 0;
-        while (true) {
-            loops += 1;
-            const output = response.output ?? [];
-            const toolCalls = output.filter((x: any) => x.type === "function_call");
-            log(`Loop ${loops}: toolCalls=${toolCalls.length}`);
-
-            if (toolCalls.length === 0) break;
-
-            const toolOutputItems = await runToolCalls(output);
-            log(`Loop ${loops}: tool outputs=${toolOutputItems.length}`);
-
-            response = await openai.responses.create({
-                model: "gpt-4o-mini",
-                tools,
-                previous_response_id: response.id,
-                input: toolOutputItems,
-            });
-
-            log(`Loop ${loops}: next response id=${response.id} output=${response.output?.length ?? 0}`);
-
-            if (loops > 8) {
-                log("Tool loop exceeded 8 iterations, breaking.");
-                break;
-            }
-        }
-
-        const texts: string[] = [];
-        for (const item of response.output ?? []) {
-            if (item.type === "message") {
-                const content = item.content ?? [];
-                for (const c of content) {
-                    if (c.type === "output_text" && c.text) texts.push(c.text);
+                if (!apiKey) {
+                    send({ type: "error", message: "OPENAI_API_KEY is missing in server env." });
+                    send("[DONE]");
+                    controller.close();
+                    return;
                 }
+
+                const openai = new OpenAI({ apiKey });
+
+                const body = await req.json().catch(() => null);
+                if (!body) {
+                    send({ type: "error", message: "Invalid JSON body" });
+                    send("[DONE]");
+                    controller.close();
+                    return;
+                }
+
+                const messages = (body?.messages ?? []) as ChatMsg[];
+                if (!Array.isArray(messages) || messages.length === 0) {
+                    send({ type: "error", message: "No messages provided" });
+                    send("[DONE]");
+                    controller.close();
+                    return;
+                }
+
+                const transcript = messages.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join("\n");
+                const system = buildSystemPrompt();
+
+                log("Transcript length:", transcript.length);
+                log("System prompt length:", system.length);
+
+                let response = await openai.responses.create({
+                    model: "gpt-4o-mini",
+                    tools,
+                    input: `${system}\n\n---\n\n${transcript}\nASSISTANT:`,
+                    stream: true,
+                });
+
+                let toolCallItems: any[] = [];
+
+                for await (const event of response as any) {
+
+                    if (event?.type === "response.output_text.delta") {
+                        const delta = event?.delta;
+                        if (typeof delta === "string" && delta.length) {
+                            send({ type: "delta", text: delta });
+                        }
+                    }
+
+                    if (event?.type === "response.output_item.added" && event?.item?.type === "function_call") {
+                        toolCallItems.push(event.item);
+                    }
+                    if (event?.type === "response.function_call_arguments.delta") {
+                        const last = toolCallItems[toolCallItems.length - 1];
+                        if (last) {
+                            last.arguments = (last.arguments || "") + (event?.delta || "");
+                        }
+                    }
+
+                    if (event?.type === "response.completed") {
+                        if (toolCallItems.length) {
+                            const toolOutputs = await runToolCalls(toolCallItems);
+
+                            const followup = await openai.responses.create({
+                                model: "gpt-4o-mini",
+                                tools,
+                                previous_response_id: event.response?.id,
+                                input: toolOutputs,
+                                stream: true,
+                            });
+
+                            for await (const ev2 of followup as any) {
+                                if (ev2?.type === "response.output_text.delta") {
+                                    const delta2 = ev2?.delta;
+                                    if (typeof delta2 === "string" && delta2.length) {
+                                        send({ type: "delta", text: delta2 });
+                                    }
+                                }
+                                if (ev2?.type === "response.completed") break;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+
+                send("[DONE]");
+                controller.close();
+                log("Stream done ms:", Date.now() - started);
+            } catch (err: any) {
+                console.error("[api/chat] STREAM ERROR:", err);
+                send({ type: "error", message: err?.message || "Server error while calling the AI." });
+                send("[DONE]");
+                controller.close();
             }
-        }
+        },
+    });
 
-        const reply = texts.join("\n").trim();
-        log("Reply length:", reply.length, "ms:", Date.now() - started);
-
-        return Response.json({ reply });
-    } catch (err: any) {
-        console.error("[api/chat] FULL ERROR:", err);
-
-        const status = err?.status ?? 500;
-
-        const details =
-            err?.error ??
-            err?.body ??
-            err?.response ??
-            null;
-
-        const safe = {
-            name: err?.name,
-            message: err?.message,
-            status: err?.status,
-            code: err?.code,
-            type: err?.type,
-            error: details,
-        };
-
-        log("ERROR (safe):", safe);
-
-        return Response.json(
-            {
-                reply: "Server error while calling the AI.",
-                error: safe,
-            },
-            { status }
-        );
-    }
-
+    return new Response(stream, { headers: sseHeaders() });
 }

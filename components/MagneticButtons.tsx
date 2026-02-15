@@ -1,17 +1,18 @@
+
 // components/MagneticButtons.tsx
 "use client";
 
 import { useEffect } from "react";
 
-const SELECTOR =
-    '.btn-pro, .btn-social, .btn-outline-info, .btn-outline-light, button[type="submit"]';
+const SELECTOR = '.btn-pro, .btn-social, .btn-outline-info, .btn-outline-light, button[type="submit"]';
 
 export default function MagneticButtons() {
     useEffect(() => {
-        const buttons = Array.from(document.querySelectorAll<HTMLElement>(SELECTOR));
+        const allButtons = Array.from(document.querySelectorAll<HTMLElement>(SELECTOR));
+        const buttons = allButtons.filter(btn => !btn.closest('.chat-widget-wrapper'));
+
         if (!buttons.length) return;
 
-        // Keep references so we can remove listeners on cleanup
         const cleanupFns: Array<() => void> = [];
 
         buttons.forEach((btn) => {
@@ -30,7 +31,6 @@ export default function MagneticButtons() {
                 btn.style.transform = "translate(0px, 0px)";
             };
 
-            // Optional: smoother feel
             btn.style.willChange = "transform";
 
             btn.addEventListener("mousemove", onMove);

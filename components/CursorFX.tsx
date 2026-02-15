@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { useEffect } from "react";
@@ -22,6 +20,11 @@ export default function CursorFX() {
         if (!dot || !outline) return;
 
         const onMove = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target && target.closest('.chat-widget-wrapper')) {
+                return;
+            }
+
             gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
             gsap.to(outline, {
                 x: e.clientX,
@@ -34,8 +37,10 @@ export default function CursorFX() {
         window.addEventListener("mousemove", onMove, { passive: true });
 
         const selector = "a, button, .project-card, .btn-social, .nav-link";
+
         const bindInteractives = () => {
-            const interactives = Array.from(document.querySelectorAll<HTMLElement>(selector));
+            const interactives = Array.from(document.querySelectorAll<HTMLElement>(selector))
+                .filter(el => !el.closest('.chat-widget-wrapper'));
 
             const onEnter = () => {
                 dot.classList.add("cursor-active");

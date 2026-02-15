@@ -1,9 +1,7 @@
-
-//components/ChatWidget.tsx
+// components/ChatWidget.tsx
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -17,11 +15,20 @@ export default function ChatWidget() {
         {
             role: "assistant",
             content:
-                "Hey — I’m Eliachar’s assistant. Ask me about iOS (Swift/SwiftUI), Flutter, AI, or any project on this site.",
+                "Hi — I’m Eliachar, a Senior Mobile Engineer specializing in iOS, Flutter, and Applied AI. Feel free to ask about my experience, projects, architecture decisions, or how I build production-ready systems.",
+
         },
     ]);
 
     const listRef = useRef<HTMLDivElement | null>(null);
+    const pendingRef = useRef<string>("");
+    const flushTimerRef = useRef<number | null>(null);
+    const streamDoneRef = useRef(false);
+    const resolveDrainRef = useRef<null | (() => void)>(null);
+
+    const FLUSH_EVERY_MS = 40;
+    const CHARS_PER_TICK = 2;
+
     const canSend = useMemo(() => input.trim().length > 0 && !loading, [input, loading]);
 
     useEffect(() => setMounted(true), []);
@@ -29,54 +36,168 @@ export default function ChatWidget() {
     useEffect(() => {
         if (!open) return;
         requestAnimationFrame(() => {
-            listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
+            const el = listRef.current;
+            if (!el) return;
+            el.scrollTop = el.scrollHeight;
         });
-    }, [open, messages]);
+    }, [open, messages.length, loading]);
+
+    useEffect(() => {
+        return () => {
+            if (flushTimerRef.current != null) {
+                window.clearInterval(flushTimerRef.current);
+                flushTimerRef.current = null;
+            }
+        };
+    }, []);
+
+    function updateAssistantAt(index: number, delta: string) {
+        setMessages((prev) => {
+            if (index < 0 || index >= prev.length) return prev;
+            const next = [...prev];
+            next[index] = { ...next[index], content: (next[index].content || "") + delta };
+            return next;
+        });
+    }
+
+    function startFlushLoop(index: number) {
+        if (flushTimerRef.current != null) return;
+
+        flushTimerRef.current = window.setInterval(() => {
+            if (pendingRef.current.length) {
+                const chunk = pendingRef.current.slice(0, CHARS_PER_TICK);
+                pendingRef.current = pendingRef.current.slice(CHARS_PER_TICK);
+                updateAssistantAt(index, chunk);
+                return;
+            }
+
+            if (streamDoneRef.current) {
+                stopFlushLoop();
+                resolveDrainRef.current?.();
+                resolveDrainRef.current = null;
+            }
+        }, FLUSH_EVERY_MS);
+    }
+
+    function stopFlushLoop() {
+        if (flushTimerRef.current != null) {
+            window.clearInterval(flushTimerRef.current);
+            flushTimerRef.current = null;
+        }
+    }
 
     async function send() {
         const text = input.trim();
         if (!text || loading) return;
 
-        const nextMessages: Msg[] = [...messages, { role: "user", content: text }];
-        setMessages(nextMessages);
+        const base: Msg[] = [...messages, { role: "user" as const, content: text }];
+        setMessages(base);
         setInput("");
         setLoading(true);
+
+        const assistantIndex = base.length;
+        setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+        pendingRef.current = "";
+        streamDoneRef.current = false;
+
+        const drainPromise = new Promise<void>((resolve) => {
+            resolveDrainRef.current = resolve;
+        });
 
         try {
             const res = await fetch("/api/chat", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: nextMessages }),
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "text/event-stream",
+                },
+                body: JSON.stringify({ messages: base }),
             });
 
-            const data = await res.json().catch(() => ({}));
-
-            if (!res.ok) {
-                console.error("API /api/chat error:", data);
-
-                setMessages((prev) => [
-                    ...prev,
-                    {
+            if (!res.ok || !res.body) {
+                const data = await res.json().catch(() => ({}));
+                setMessages((prev) => {
+                    const next = [...prev];
+                    next[assistantIndex] = {
                         role: "assistant",
-                        content: `❌ API error: ${data?.error?.message ||
-                            data?.error?.code ||
-                            data?.error ||
-                            "Unknown error"
+                        content: `❌ API error: ${data?.error?.message || data?.error?.code || data?.error || "Unknown error"
                             }`,
-                    },
-                ]);
+                    };
+                    return next;
+                });
+                stopFlushLoop();
                 return;
             }
 
-            // normal success
-            setMessages((prev) => [...prev, { role: "assistant", content: data.reply || "…" }]);
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let buffer = "";
 
+            startFlushLoop(assistantIndex);
+
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const parts = buffer.split("\n\n");
+                buffer = parts.pop() ?? "";
+
+                for (const part of parts) {
+                    const lines = part.split("\n");
+                    for (const line of lines) {
+                        if (!line.startsWith("data:")) continue;
+
+                        const payload = line.slice(5).trim();
+                        if (!payload) continue;
+
+                        if (payload === "[DONE]") {
+                            streamDoneRef.current = true;
+                            break;
+                        }
+
+                        try {
+                            const obj = JSON.parse(payload);
+
+                            if (obj.type === "delta" && typeof obj.text === "string") {
+                                pendingRef.current += obj.text;
+                            }
+
+                            if (obj.type === "error") {
+                                setMessages((prev) => {
+                                    const next = [...prev];
+                                    next[assistantIndex] = {
+                                        role: "assistant",
+                                        content: `❌ API error: ${obj.message || "Unknown error"}`,
+                                    };
+                                    return next;
+                                });
+                                streamDoneRef.current = true;
+                            }
+                        } catch { }
+                    }
+                }
+
+                if (streamDoneRef.current) break;
+            }
+
+            streamDoneRef.current = true;
+            await drainPromise;
         } catch {
-            setMessages((prev) => [
-                ...prev,
-                { role: "assistant", content: "Something went wrong. Please try again." },
-            ]);
+            setMessages((prev) => {
+                const next = [...prev];
+                next[assistantIndex] = {
+                    role: "assistant",
+                    content: "Something went wrong. Please try again.",
+                };
+                return next;
+            });
         } finally {
+            streamDoneRef.current = true;
+            resolveDrainRef.current?.();
+            resolveDrainRef.current = null;
+            stopFlushLoop();
             setLoading(false);
         }
     }
@@ -87,18 +208,20 @@ export default function ChatWidget() {
 
     if (!mounted) return null;
 
-    return createPortal(
+    return (
         <div
+            className="chat-widget-wrapper"
             style={{
                 position: "fixed",
                 right: 20,
                 bottom: 20,
                 zIndex: 999999,
-                pointerEvents: "auto",
+                pointerEvents: "none",
             }}
         >
-            {/* Modal (opens above-left of button) */}
+            {/* Chat Panel */}
             <div
+                className="chat-panel"
                 style={{
                     position: "absolute",
                     right: 0,
@@ -116,7 +239,7 @@ export default function ChatWidget() {
                         overflow: "hidden",
                         borderRadius: 18,
                         border: "1px solid rgba(255,255,255,0.10)",
-                        background: "rgba(15, 15, 18, 0.72)", // dark material opacity
+                        background: "rgba(15, 15, 18, 0.72)",
                         backdropFilter: "blur(18px)",
                         WebkitBackdropFilter: "blur(18px)",
                         boxShadow: "0 18px 60px rgba(0,0,0,0.55)",
@@ -136,7 +259,15 @@ export default function ChatWidget() {
                             <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.90)" }}>
                                 Chat with Eliachar
                             </div>
-                            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.60)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            <div
+                                style={{
+                                    fontSize: 12,
+                                    color: "rgba(255,255,255,0.60)",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                }}
+                            >
                                 iOS • Flutter • Full-stack • AI • Projects
                             </div>
                         </div>
@@ -145,6 +276,7 @@ export default function ChatWidget() {
                             type="button"
                             onClick={() => setOpen(false)}
                             aria-label="Close chat"
+                            className="chat-close-btn"
                             style={{
                                 border: "1px solid rgba(255,255,255,0.10)",
                                 background: "rgba(255,255,255,0.06)",
@@ -152,6 +284,7 @@ export default function ChatWidget() {
                                 borderRadius: 12,
                                 padding: "6px 10px",
                                 cursor: "pointer",
+                                transition: "all 0.2s ease",
                             }}
                         >
                             ✕
@@ -184,6 +317,7 @@ export default function ChatWidget() {
                                             color: "rgba(255,255,255,0.88)",
                                             background: isUser ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.08)",
                                             border: "1px solid rgba(255,255,255,0.10)",
+                                            whiteSpace: "pre-wrap",
                                         }}
                                     >
                                         {m.content}
@@ -204,7 +338,7 @@ export default function ChatWidget() {
                                         border: "1px solid rgba(255,255,255,0.10)",
                                     }}
                                 >
-                                    Typing…
+                                    Eliachar is typing…
                                 </div>
                             </div>
                         )}
@@ -225,6 +359,7 @@ export default function ChatWidget() {
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={onKeyDown}
                             placeholder="Type your message…"
+                            className="chat-input"
                             style={{
                                 flex: 1,
                                 padding: "10px 12px",
@@ -233,12 +368,14 @@ export default function ChatWidget() {
                                 border: "1px solid rgba(255,255,255,0.12)",
                                 background: "rgba(255,255,255,0.08)",
                                 color: "rgba(255,255,255,0.90)",
+                                fontSize: 13,
                             }}
                         />
                         <button
                             type="button"
                             onClick={send}
                             disabled={!canSend}
+                            className="chat-send-btn"
                             style={{
                                 padding: "10px 14px",
                                 borderRadius: 14,
@@ -247,6 +384,9 @@ export default function ChatWidget() {
                                 color: "rgba(255,255,255,0.92)",
                                 cursor: canSend ? "pointer" : "not-allowed",
                                 opacity: canSend ? 1 : 0.5,
+                                fontSize: 13,
+                                fontWeight: 600,
+                                transition: "all 0.2s ease",
                             }}
                         >
                             Send
@@ -255,11 +395,12 @@ export default function ChatWidget() {
                 </div>
             </div>
 
-            {/* Floating button — ALWAYS bottom-right */}
+            {/* Toggle Button */}
             <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
                 aria-label="Toggle chat"
+                className="chat-toggle-btn"
                 style={{
                     height: 48,
                     padding: "0 14px",
@@ -274,6 +415,8 @@ export default function ChatWidget() {
                     alignItems: "center",
                     gap: 10,
                     cursor: "pointer",
+                    pointerEvents: "auto",
+                    transition: "all 0.3s ease",
                 }}
             >
                 <span
@@ -288,9 +431,8 @@ export default function ChatWidget() {
                 >
                     💬
                 </span>
-                <span style={{ fontSize: 13, fontWeight: 700 }}>{open ? "Close" : "Chat"}</span>
+                <span style={{ fontSize: 13, fontWeight: 700 }}>{open ? "Close" : "Chat With Me"}</span>
             </button>
-        </div>,
-        document.body
+        </div>
     );
 }
