@@ -1,23 +1,60 @@
 # Eliachar Feig — Portfolio Website (Next.js)
 
 Modern, animated developer portfolio built with **Next.js** and a polished UI stack:
-- **GSAP** (ScrollTrigger + ScrollToPlugin) for scroll animations & smooth navigation
-- **VanillaTilt** for interactive 3D card tilt
-- **Bootstrap** (utility + layout) + custom CSS for fast, responsive styling
-- Component-based architecture with a clean, production-ready structure
 
-Live: **www.eliacharfeig.com**
+- **GSAP** (ScrollTrigger + ScrollToPlugin) for scroll animations & smooth navigation  
+- **VanillaTilt** for interactive 3D card tilt  
+- **Bootstrap** (utility + layout) + custom CSS for fast, responsive styling  
+- **AI Chatbot** with streaming responses (Server-Sent Events)  
+- Component-based architecture with a clean, production-ready structure  
+
+Live: **https://www.eliacharfeig.com**
 
 ---
 
 ## ✨ Highlights
 
 - Smooth scroll navigation (GSAP ScrollToPlugin)
-- Scroll progress indicator + “scrolled” navbar state
+- Scroll progress indicator + dynamic navbar state
 - Scroll-triggered section animations (GSAP ScrollTrigger)
 - Tilt / glare effects on project cards (VanillaTilt)
 - Responsive layout with Bootstrap grid + custom theming
 - Optimized Next.js build for Vercel deployment
+- AI-powered streaming chatbot with real-time responses
+
+---
+
+## 🤖 AI Chatbot
+
+The portfolio includes a fully integrated AI assistant that allows visitors to ask about:
+
+- Professional experience
+- Technical architecture decisions
+- Projects & production systems
+- Engineering philosophy
+- Applied AI integrations
+
+### 🚀 Features
+
+- Server-Sent Events (SSE) streaming responses
+- Smooth typewriter-style flush loop (controlled character batching)
+- Smart auto-scroll behavior (sticks to bottom unless user scrolls up)
+- HTML-safe rendering using DOMPurify
+- Dark material UI with backdrop blur
+- Success / error push events with animated modal
+- Production-ready `/api/chat` endpoint
+
+### ⚙️ Technical Implementation
+
+- Streaming via `ReadableStream` + `TextDecoder`
+- Custom delta buffering system
+- Controlled render batching for performance
+- Graceful error handling
+- Fully client-safe HTML sanitization
+- Modal system triggered by backend push events (`push_success`, `push_error`)
+- Scroll stickiness logic that respects user intent (no scroll hijacking)
+
+This chatbot demonstrates real-world applied AI integration inside a modern frontend architecture.
 
 ---
 
@@ -29,6 +66,7 @@ Live: **www.eliacharfeig.com**
 - **GSAP** (`ScrollTrigger`, `ScrollToPlugin`)
 - **VanillaTilt**
 - **Bootstrap**
+- **OpenAI API (Streaming via SSE)**
 - Custom CSS / utility styling
 
 ---
@@ -36,24 +74,17 @@ Live: **www.eliacharfeig.com**
 ## ✅ Requirements
 
 - **Node.js 18+**
-- npm / pnpm / yarn (any is fine)
+- npm / pnpm / yarn
 
 ---
 
 ## 🚀 Getting Started
 
-Install dependencies:
-
-```bash
-npm install
-
-
-## 🚀 Run Locally
-
 ### 1. Install dependencies
 
 ```bash
 npm install
+
 ```
 
 ### 2. Start development server
