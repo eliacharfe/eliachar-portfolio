@@ -52,6 +52,7 @@ The portfolio includes a fully integrated AI assistant that allows visitors to a
 - Graceful error handling
 - Fully client-safe HTML sanitization
 - Modal system triggered by backend push events (`push_success`, `push_error`)
+- Integrated OpenAI **Tools (function calling)** for structured backend-triggered actions
 - Scroll stickiness logic that respects user intent (no scroll hijacking)
 
 This chatbot demonstrates real-world applied AI integration inside a modern frontend architecture.
