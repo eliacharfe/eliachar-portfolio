@@ -12,6 +12,8 @@ export default function Navbar() {
     const [progress, setProgress] = useState(0);
 
     const registeredRef = useRef(false);
+    const progressRef = useRef<HTMLDivElement | null>(null);
+
 
     useEffect(() => {
         if (!registeredRef.current) {
@@ -108,6 +110,10 @@ export default function Navbar() {
         });
     }
 
+    function clearHashToRoot() {
+        history.replaceState(null, "", "/");
+    }
+
     function onNavClick(
         e: React.MouseEvent,
         hash: string,
@@ -116,6 +122,7 @@ export default function Navbar() {
         e.preventDefault();
 
         closeBootstrapCollapseIfOpen();
+        clearHashToRoot();
 
         if (opts?.horizontal) {
             scrollToHorizontalPanel(hash);
@@ -139,6 +146,7 @@ export default function Navbar() {
             const horizontal = ce.detail.horizontal ?? false;
 
             closeBootstrapCollapseIfOpen();
+            clearHashToRoot();
 
             if (horizontal) {
                 scrollToHorizontalPanel(hash);
@@ -149,15 +157,46 @@ export default function Navbar() {
 
         window.addEventListener("nav:go", handler as EventListener);
         return () => window.removeEventListener("nav:go", handler as EventListener);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        let ticking = false;
+
+        const update = () => {
+            ticking = false;
+
+            const scrollTop = window.scrollY;
+            const docHeight =
+                document.documentElement.scrollHeight -
+                document.documentElement.clientHeight;
+
+            const p = docHeight > 0 ? scrollTop / docHeight : 0;
+
+            if (progressRef.current) {
+                progressRef.current.style.transform = `scaleX(${p})`;
+            }
+
+            setScrolled(scrollTop > 50);
+        };
+
+        const onScroll = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        update();
+
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
 
 
 
     return (
         <>
-            {/* Scroll Progress Bar */}
-            <div className="scroll-progress" style={{ width: `${progress}%` }} />
 
             <nav
                 className={`navbar navbar-expand-lg navbar-dark fixed-top ${scrolled ? "scrolled" : ""
@@ -310,6 +349,8 @@ export default function Navbar() {
                         </ul>
                     </div>
                 </div>
+
+                <div ref={progressRef} className="scroll-progress" />
             </nav>
         </>
     );

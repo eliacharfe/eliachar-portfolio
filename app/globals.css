@@ -1,5 +1,4 @@
 /* @import "tailwindcss"; */
-
 /* custom.css */
 
 :root {
@@ -54,11 +53,16 @@ body {
 
 .navbar.scrolled {
   border-bottom: 1px solid var(--border);
-  padding: 0.8rem 5% !important;
+  padding: 1.2rem 5% !important;
   background: rgba(0, 0, 0, 0.9) !important;
   border-bottom: 1px solid rgba(0, 210, 255, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 1);
 }
+
+.navbar:not(.scrolled) {
+  padding: 1.9rem 5% !important;
+}
+
 
 .navbar-brand {
   transition: transform 0.3s ease;
@@ -648,13 +652,17 @@ button[type="submit"].btn-pro {
 }
 
 .scroll-progress {
-  position: fixed;
-  top: 0;
+  position: absolute;
   left: 0;
+  bottom: 0;
   height: 5px;
+  width: 100%;
   background: linear-gradient(to right, var(--accent), var(--accent-dark));
-  z-index: 9999;
-  transition: width 0.1s ease-out;
+  z-index: 2;
+
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
 }
 
 .reveal-text {
@@ -2404,13 +2412,7 @@ html[data-bg-c1="on"] #bg-c1-layer {
   }
 }
 
-.navbar:not(.scrolled) {
-  padding: 1.5rem 5% !important;
-}
 
-.navbar.scrolled {
-  padding: 0.8rem 5% !important;
-}
 
 .chat-toggle-btn:hover {
   transform: translateY(-2px);

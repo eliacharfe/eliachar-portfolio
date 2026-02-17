@@ -1,7 +1,26 @@
 // components/Hero.tsx
+"use client";
 
 import Link from "next/link";
 import HeroEffects from "./HeroEffects";
+
+function goToSection(
+    e: React.MouseEvent,
+    hash: string,
+    opts?: { offsetY?: number; horizontal?: boolean }
+) {
+    e.preventDefault();
+
+    window.dispatchEvent(
+        new CustomEvent("nav:go", {
+            detail: {
+                hash,
+                offsetY: opts?.offsetY ?? 80,
+                horizontal: opts?.horizontal ?? false,
+            },
+        })
+    );
+}
 
 export default function Hero() {
     return (
@@ -29,13 +48,18 @@ export default function Hero() {
                     </p>
 
                     <div className="hero-buttons d-flex justify-content-center gap-3 flex-wrap">
-                        <Link href="#projects" className="btn-pro text-decoration-none">
+                        <Link
+                            href="/"
+                            className="btn-pro text-decoration-none"
+                            onClick={(e) => goToSection(e, "#projects", { offsetY: 30 })}
+                        >
                             Explore Projects
                         </Link>
 
                         <Link
-                            href="#about"
-                            className="btn btn-outline-light rounded-pill px-4 justify-content-cente"
+                            href="/"
+                            className="btn btn-outline-light rounded-pill px-4"
+                            onClick={(e) => goToSection(e, "#about", { offsetY: 70 })}
                         >
                             About Me
                         </Link>
