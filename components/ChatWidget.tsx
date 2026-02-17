@@ -39,6 +39,21 @@ export default function ChatWidget() {
     const flushTimerRef = useRef<number | null>(null);
     const streamDoneRef = useRef(false);
     const resolveDrainRef = useRef<null | (() => void)>(null);
+    const shouldStickRef = useRef(true);
+
+    function scrollToBottom(force = false) {
+        const el = listRef.current;
+        if (!el) return;
+
+        const threshold = 80; 
+        const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+        const isNearBottom = distanceFromBottom < threshold;
+
+        if (force || shouldStickRef.current || isNearBottom) {
+            el.scrollTop = el.scrollHeight;
+        }
+    }
+
 
     const FLUSH_EVERY_MS = 40;
     const CHARS_PER_TICK = 2;
@@ -50,11 +65,10 @@ export default function ChatWidget() {
     useEffect(() => {
         if (!open) return;
         requestAnimationFrame(() => {
-            const el = listRef.current;
-            if (!el) return;
-            el.scrollTop = el.scrollHeight;
+            scrollToBottom(false);
         });
     }, [open, messages.length, loading]);
+
 
     useEffect(() => {
         return () => {
@@ -82,6 +96,9 @@ export default function ChatWidget() {
                 const chunk = pendingRef.current.slice(0, CHARS_PER_TICK);
                 pendingRef.current = pendingRef.current.slice(CHARS_PER_TICK);
                 updateAssistantAt(index, chunk);
+
+                scrollToBottom();
+
                 return;
             }
 
@@ -89,9 +106,12 @@ export default function ChatWidget() {
                 stopFlushLoop();
                 resolveDrainRef.current?.();
                 resolveDrainRef.current = null;
+
+                scrollToBottom(true);
             }
         }, FLUSH_EVERY_MS);
     }
+
 
     function stopFlushLoop() {
         if (flushTimerRef.current != null) {
@@ -111,6 +131,9 @@ export default function ChatWidget() {
 
         const assistantIndex = base.length;
         setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+        shouldStickRef.current = true;
+        requestAnimationFrame(() => scrollToBottom(true));
 
         pendingRef.current = "";
         streamDoneRef.current = false;
@@ -331,6 +354,14 @@ export default function ChatWidget() {
 
                         <div
                             ref={listRef}
+                            onScroll={() => {
+                                const el = listRef.current;
+                                if (!el) return;
+
+                                const threshold = 80;
+                                const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+                                shouldStickRef.current = distanceFromBottom < threshold;
+                            }}
                             style={{
                                 height: 380,
                                 overflow: "auto",
