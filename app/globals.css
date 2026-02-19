@@ -2370,14 +2370,25 @@ html[data-bg-c1="on"] #bg-c1-layer {
   pointer-events: none !important;
 }
 
-.chat-widget-wrapper * {
-  pointer-events: auto;
+
+.chat-widget-wrapper {
+  pointer-events: none !important;
 }
 
-.chat-panel,
 .chat-toggle-btn {
   pointer-events: auto !important;
 }
+
+.chat-panel {
+  pointer-events: none !important;
+  /* closed = click-through */
+}
+
+.chat-panel.is-open {
+  pointer-events: auto !important;
+  /* open = interactive */
+}
+
 
 .chat-widget-wrapper,
 .chat-widget-wrapper * {

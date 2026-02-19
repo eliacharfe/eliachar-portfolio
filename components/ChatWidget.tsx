@@ -45,7 +45,7 @@ export default function ChatWidget() {
         const el = listRef.current;
         if (!el) return;
 
-        const threshold = 80; 
+        const threshold = 80;
         const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
         const isNearBottom = distanceFromBottom < threshold;
 
@@ -283,7 +283,7 @@ export default function ChatWidget() {
                 }}
             >
                 <div
-                    className="chat-panel"
+                    className={`chat-panel ${open ? "is-open" : ""}`}
                     style={{
                         position: "absolute",
                         right: 0,
@@ -293,7 +293,6 @@ export default function ChatWidget() {
                         opacity: open ? 1 : 0,
                         transform: open ? "translateY(0)" : "translateY(8px)",
                         transition: "opacity 180ms ease, transform 180ms ease",
-                        pointerEvents: open ? "auto" : "none",
                     }}
                 >
                     <div

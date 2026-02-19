@@ -13,6 +13,7 @@ import Learning from "../components/Learning";
 import Contact from "../components/Contact";
 import AiSignature from "../components/AiSignature";
 import Footer from "../components/Footer";
+import C1Spacer from "../components/C1Spacer";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
         <TrackRecord />
         <Process />
         <Learning />
+        {/* <C1Spacer id="between-learning-contact" /> */}
         <Contact />
       </HorizontalWrapper>
 
