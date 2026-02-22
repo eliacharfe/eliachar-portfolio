@@ -13,6 +13,8 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
 }
 
 body {
@@ -2123,25 +2125,6 @@ body {
   border: 0;
 }
 
-.project-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(10px);
-  display: grid;
-  place-items: center;
-  padding: 22px;
-}
-
-.project-modal {
-  width: min(980px, 96vw);
-  max-height: 86vh;
-  overflow: hidden;
-  position: relative;
-  border-radius: 18px;
-}
-
 .glass-modal {
   background: rgba(15, 15, 20, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -2150,11 +2133,6 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
-.project-modal-content {
-  max-height: 86vh;
-  overflow-y: auto;
-  padding: 26px 26px 22px;
-}
 
 .project-modal-close {
   position: absolute;
@@ -2253,6 +2231,46 @@ body {
 
 .project-modal.shimmer {
   animation: modalGlow 600ms ease-out;
+}
+
+.project-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.project-modal {
+  width: min(980px, 86vw);
+  max-height: calc(100dvh - 200px);
+  max-height: calc(100vh - 200px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  position: relative;
+  border-radius: 18px;
+}
+
+.project-modal-content::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+
+}
+
+.project-modal-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 26px 26px 22px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
 }
 
 @keyframes modalShimmer {
@@ -2381,12 +2399,10 @@ html[data-bg-c1="on"] #bg-c1-layer {
 
 .chat-panel {
   pointer-events: none !important;
-  /* closed = click-through */
 }
 
 .chat-panel.is-open {
   pointer-events: auto !important;
-  /* open = interactive */
 }
 
 

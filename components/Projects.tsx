@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 
 type ProjectKey =
     | "innerorbit"
+    | "multillm"
     | "assemble"
     | "bookstore"
     | "sonic"
@@ -40,6 +41,7 @@ type Project = {
     videoId?: string;
     githubUrl?: string | null;
     googlePlayUrl?: string;
+    liveUrl?: string;
     details: ProjectDetails;
 };
 
@@ -73,6 +75,53 @@ const PROJECTS: Project[] = [
                 "Shipped as a real product",
                 "Built for fast experimentation + iteration",
                 "Scalable structure for future AI features",
+            ],
+        },
+    },
+
+    {
+        key: "multillm",
+        tag: "Full Stack & LLMs",
+        title: "Multi-LLM Chat Platform",
+        description:
+            "A production-style, multi-provider AI chat app with per-user authentication, isolated chat history, streaming responses, and PostgreSQL persistence — built with a Next.js frontend and a Dockerized FastAPI backend.",
+        iconClass: "fas fa-robot",
+        liveUrl: "https://multi-llm-platform-premium.vercel.app/",
+        githubUrl: "https://github.com/eliacharfe/multi-llm-platform-chat",
+        videoId: undefined,
+        details: {
+            subtitle: "Multi-Provider AI Chat with Streaming + Per-User Persistence",
+            problem:
+                "Most chat demos are single-provider and stateless. I wanted a real production-style architecture with user authentication, isolated chat sessions per user, multi-provider routing, and token-by-token streaming — not just a basic chatbot UI.",
+            solution:
+                "Built a full-stack platform with a premium Next.js UI and a Dockerized FastAPI backend that verifies Firebase ID tokens server-side, persists chats/messages in PostgreSQL scoped to user_id, and streams responses via SSE while dynamically routing requests to multiple LLM providers.",
+            role: [
+                "System architecture (frontend + backend)",
+                "Streaming (SSE) integration end-to-end",
+                "Firebase Auth integration + server-side token verification",
+                "PostgreSQL schema + per-user chat isolation",
+                "Provider/model routing + SDK normalization",
+                "UI/UX for multi-chat management (sidebar, previews, delete, copy, markdown)",
+            ],
+            stack: [
+                "Next.js",
+                "React",
+                "TypeScript",
+                "Tailwind CSS",
+                "FastAPI",
+                "Python",
+                "PostgreSQL",
+                "SQLAlchemy (Async)",
+                "Firebase Auth",
+                "Docker",
+                "SSE Streaming",
+                "OpenAI / Anthropic / Groq / OpenRouter / Gemini",
+            ],
+            impact: [
+                "Production-style full-stack architecture (not a demo chatbot)",
+                "Per-user isolated chat history persisted in PostgreSQL",
+                "Real-time streaming UX with provider-agnostic routing",
+                "Scalable foundation for multimodal + RAG + cost tracking",
             ],
         },
     },
@@ -326,6 +375,17 @@ function DetailsModal({ project, onClose }: { project: Project; onClose: () => v
                             </button>
                         )}
 
+                        {project.liveUrl && (
+                            <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="btn btn-sm btn-warning rounded-pill px-3"
+                            >
+                                <i className="fas fa-arrow-up-right-from-square me-1" /> Live Demo
+                            </a>
+                        )}
+
                         {project.googlePlayUrl && (
                             <a
                                 href={project.googlePlayUrl}
@@ -438,11 +498,49 @@ export default function Projects() {
                 >
                     {PROJECTS.map((p) => {
                         const hasVideo = !!p.videoId;
+                        const hasLive = !!p.liveUrl;
+                        const isClickable = hasVideo || hasLive;
 
                         return (
                             <SwiperSlide key={p.key}>
                                 <div className="project-card">
                                     <div
+                                        className={`project-hero ${isClickable ? "" : "no-video"}`}
+                                        role={isClickable ? "button" : undefined}
+                                        tabIndex={isClickable ? 0 : -1}
+                                        onClick={() => {
+                                            if (hasVideo) {
+                                                setVideoId(p.videoId!);
+                                            } else if (hasLive) {
+                                                window.open(p.liveUrl!, "_blank", "noopener,noreferrer");
+                                            }
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (!isClickable) return;
+                                            if (e.key === "Enter" || e.key === " ") {
+                                                if (hasVideo) {
+                                                    setVideoId(p.videoId!);
+                                                } else if (hasLive) {
+                                                    window.open(p.liveUrl!, "_blank", "noopener,noreferrer");
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        <i className={`${p.iconClass} project-hero-icon`} />
+
+                                        {hasVideo && <div className="project-hero-label">Play Video</div>}
+
+                                        {hasLive && !hasVideo && (
+                                            <div className="project-hero-label">Visit Website</div>
+                                        )}
+
+                                        {hasVideo && (
+                                            <div className="video-overlay" aria-hidden="true">
+                                                <i className="fas fa-play-circle fa-3x" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* <div
                                         className={`project-hero ${hasVideo ? "" : "no-video"}`}
                                         role={hasVideo ? "button" : undefined}
                                         tabIndex={hasVideo ? 0 : -1}
@@ -459,7 +557,7 @@ export default function Projects() {
                                                 <i className="fas fa-play-circle fa-3x" />
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
 
                                     <div className="project-content">
                                         <span className="tag">{p.tag}</span>
@@ -480,6 +578,18 @@ export default function Projects() {
                                                 >
                                                     <i className="fas fa-eye me-1" /> Watch
                                                 </button>
+                                            )}
+
+                                            {p.liveUrl && (
+                                                <a
+                                                    href={p.liveUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="btn btn-sm btn-warning rounded-pill px-3"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    <i className="fas fa-arrow-up-right-from-square me-1" /> Live Demo
+                                                </a>
                                             )}
 
                                             {p.googlePlayUrl && (
