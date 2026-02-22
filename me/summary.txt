@@ -19,22 +19,30 @@ I built and shipped InnerOrbit, an AI-powered full-stack mobile application avai
 InnerOrbit combines:
 
 Flutter frontend development
-
 Firebase backend services
-
 Firestore data modeling
-
 Cloud Functions
-
 Authentication systems
-
 Push notifications (FCM)
-
 LLM-based AI integrations with streaming responses
 
 The app delivers personalized insights through intelligent data processing and structured AI generation. It supports multi-language localization using structured .arb workflows and implements real-time streaming AI responses in a production-ready environment.
 
 InnerOrbit represents full product ownership — from idea and architecture to implementation and deployment on Google Play.
+
+Key Project: Multi-LLM Chat Platform
+
+I built a full-stack multi-provider AI chat platform designed as a production-style architecture (not a simple demo chatbot).
+
+The platform includes:
+
+A premium Next.js frontend (React + TypeScript) with a responsive, modern chat UI
+A Dockerized FastAPI backend with streaming responses via Server-Sent Events (SSE)
+Firebase Authentication (Google + email/password) with server-side token verification
+PostgreSQL persistence for chats and messages, isolated per user_id
+Multi-provider model routing with provider normalization and scalable configuration
+
+It supports per-user chat history, streaming token-by-token responses, model selection, markdown rendering, chat previews, and a clean multi-chat management experience.
 
 Applied AI Engineering
 
@@ -43,17 +51,11 @@ I am deeply focused on applied AI engineering — not just consuming APIs, but b
 My work includes:
 
 Prompt engineering for structured production use-cases
-
 Tool / function-calling patterns
-
 LLM streaming architectures
-
 Retrieval-Augmented Generation (RAG)
-
 Embeddings and vector database workflows
-
 Ingestion pipelines and chunking strategies
-
 Model selection tradeoffs based on latency, cost, and quality
 
 My goal is to build AI systems that are reliable, scalable, and genuinely useful.
@@ -65,17 +67,11 @@ I personally designed and developed this portfolio website.
 It is built using:
 
 Next.js
-
 React
-
 TypeScript
-
 GSAP (ScrollTrigger animations)
-
 Modern frontend architecture
-
 Production deployment via Vercel
-
 Environment-based configuration and secure API handling
 
 The site includes custom UI interactions, scroll-triggered animations, responsive layouts, and structured integration with an AI-powered chat assistant.
@@ -83,17 +79,11 @@ The site includes custom UI interactions, scroll-triggered animations, responsiv
 Core Strengths
 
 Mobile Architecture (iOS & Flutter)
-
 Full-Stack Development
-
 API & Backend Integrations
-
 Product-Driven Engineering
-
 System Design & Scalability
-
 UI/UX Craftsmanship
-
 Applied AI in Production Systems
 
 I speak French and Hebrew natively and English professionally. I’m deeply curious about the intersection of technology, product thinking, and artificial intelligence — and I’m motivated by building tools that are technically sound, thoughtfully designed, and impactful in the real world.

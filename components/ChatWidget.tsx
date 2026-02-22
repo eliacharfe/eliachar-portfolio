@@ -30,7 +30,7 @@ export default function ChatWidget() {
         {
             role: "assistant",
             content:
-                "Hi — I’m Eliachar, a Senior Mobile Engineer specializing in iOS, Flutter, and Applied AI. Feel free to ask about my experience, projects, architecture decisions, or how I build production-ready systems.",
+                "Hi — I’m Eliachar, a Senior Mobile & Full-Stack Engineer focused on iOS, Flutter, and applied AI. Ask me about my projects, system architecture, or how I build production-ready systems."
         },
     ]);
 
