@@ -5,6 +5,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import DOMPurify from "dompurify";
 
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
+
 type Msg = { role: "user" | "assistant"; content: string };
 
 type ModalState = {
@@ -393,7 +397,26 @@ export default function ChatWidget() {
                                                 whiteSpace: "pre-wrap",
                                             }}
                                         >
-                                            {m.content}
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkGfm]}
+                                                rehypePlugins={[
+                                                    [
+                                                        rehypeSanitize,
+                                                        {
+                                                            ...defaultSchema,
+                                                            // optional: allow className on code blocks if you later add syntax highlighting
+                                                            attributes: {
+                                                                ...defaultSchema.attributes,
+                                                                code: [...(defaultSchema.attributes?.code || []), ["className"]],
+                                                                span: [...(defaultSchema.attributes?.span || []), ["className"]],
+                                                            },
+                                                        },
+                                                    ],
+                                                ]}
+                                            >
+                                                {m.content}
+                                            </ReactMarkdown>
+
                                         </div>
                                     </div>
                                 );
