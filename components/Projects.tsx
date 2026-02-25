@@ -86,7 +86,7 @@ const PROJECTS: Project[] = [
         description:
             "A production-style, multi-provider AI chat app with per-user authentication, isolated chat history, streaming responses, and PostgreSQL persistence — built with a Next.js frontend and a Dockerized FastAPI backend.",
         iconClass: "fas fa-robot",
-        liveUrl: "https://multi-llm-platform-premium.vercel.app/",
+        liveUrl: "https://multillm.net/",
         githubUrl: "https://github.com/eliacharfe/multi-llm-platform-chat",
         videoId: undefined,
         details: {
