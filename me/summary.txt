@@ -32,7 +32,7 @@ InnerOrbit represents full product ownership — from idea and architecture to i
 
 Key Project: Multi-LLM Chat Platform
 
-I built a full-stack multi-provider AI chat platform designed as a production-style architecture (not a simple demo chatbot).
+I built a full-stack multi-provider AI chat platform designed as a production-style architecture (not a simple demo chatbot) can be reached at https://multillm.net/.
 
 The platform includes:
 

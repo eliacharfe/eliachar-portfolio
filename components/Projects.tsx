@@ -382,7 +382,7 @@ function DetailsModal({ project, onClose }: { project: Project; onClose: () => v
                                 rel="noreferrer"
                                 className="btn btn-sm btn-warning rounded-pill px-3"
                             >
-                                <i className="fas fa-arrow-up-right-from-square me-1" /> Live Demo
+                                <i className="fas fa-arrow-up-right-from-square me-1" /> Live
                             </a>
                         )}
 
@@ -588,7 +588,7 @@ export default function Projects() {
                                                     className="btn btn-sm btn-warning rounded-pill px-3"
                                                     onClick={(e) => e.stopPropagation()}
                                                 >
-                                                    <i className="fas fa-arrow-up-right-from-square me-1" /> Live Demo
+                                                    <i className="fas fa-arrow-up-right-from-square me-1" /> Live
                                                 </a>
                                             )}
 
