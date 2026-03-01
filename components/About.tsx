@@ -60,7 +60,7 @@ export default function About() {
                     <div className="col-lg-5 offset-lg-1 about-right d-flex justify-content-center">
                         <div className="profile-img-container">
                             <Image
-                                src="/assets/images/profile.JPG"
+                                src="/assets/images/profile.jpeg"
                                 alt="Eliachar Feig"
                                 width={700}
                                 height={700}
