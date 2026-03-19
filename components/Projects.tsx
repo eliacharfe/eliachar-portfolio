@@ -13,16 +13,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-type ProjectKey =
-    | "innerorbit"
-    | "multillm"
-    | "assemble"
-    | "bookstore"
-    | "sonic"
-    | "houseye"
-    | "mobileye"
-    | "autocomplete";
-
 type ProjectDetails = {
     subtitle: string;
     problem: string;
@@ -45,7 +35,66 @@ type Project = {
     details: ProjectDetails;
 };
 
+type ProjectKey =
+    | "deepdaily"
+    | "innerorbit"
+    | "multillm"
+    | "assemble"
+    | "bookstore"
+    | "sonic"
+    | "houseye"
+    | "mobileye"
+    | "autocomplete";
+
 const PROJECTS: Project[] = [
+    {
+        key: "deepdaily",
+        tag: "Full Stack & AI Agents",
+        title: "DeepDaily",
+        description:
+            "An AI-powered learning platform that turns any topic into a structured, day-by-day curriculum with adaptive lessons, curated resources, streaming generation, and progress tracking.",
+        iconClass: "fas fa-graduation-cap",
+        liveUrl: "https://deepdaily.net/",
+        githubUrl: "https://github.com/eliacharfe/deepdaily",
+        videoId: undefined,
+        details: {
+            subtitle: "AI Learning Platform with Custom Multi-Agent Architecture",
+            problem:
+                "Most AI learning tools act like simple chatbots: they answer one question at a time but do not guide users through a structured learning journey. I wanted to build a real system that could break down any topic into a clear roadmap, adapt to the learner’s level, and enrich each day with relevant external resources.",
+            solution:
+                "Built a full-stack AI learning platform with a Next.js frontend and FastAPI backend, powered by custom AI agents developed from scratch. The system generates level-adapted multi-day curricula, streams lessons in real time, discovers high-quality learning resources from the web, and lets users save and continue their learning paths.",
+            role: [
+                "Product design and overall system architecture",
+                "Custom AI agent design (planner, lesson, resource, evaluation flow)",
+                "FastAPI backend and curriculum orchestration",
+                "Next.js frontend UI/UX implementation",
+                "Streaming lesson generation and saved lesson flows",
+                "Authentication, persistence, and deployment",
+            ],
+            stack: [
+                "Next.js",
+                "React",
+                "TypeScript",
+                "Tailwind CSS",
+                "FastAPI",
+                "Python",
+                "SQLAlchemy (Async)",
+                "SQLite / PostgreSQL",
+                "Firebase Auth",
+                "SSE Streaming",
+                "OpenAI",
+                "Render",
+                "Vercel",
+            ],
+            impact: [
+                "Transforms one-off prompting into a structured learning experience",
+                "Custom agent-based architecture instead of a single prompt flow",
+                "Real-time streaming UX with saved lesson persistence",
+                "Live production deployment at deepdaily.net",
+            ],
+        },
+    },
+
     {
         key: "innerorbit",
         tag: "AI & Flutter",

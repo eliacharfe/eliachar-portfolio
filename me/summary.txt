@@ -86,4 +86,71 @@ System Design & Scalability
 UI/UX Craftsmanship
 Applied AI in Production Systems
 
+
+Key Project: DeepDaily (AI Learning Platform)
+
+I built DeepDaily, an AI-powered learning platform that generates structured, day-by-day learning experiences for any topic.
+It is a full-stack system designed to move beyond generic AI responses and deliver guided, personalized learning journeys.
+
+The platform is live at: https://deepdaily.net/
+
+DeepDaily combines:
+
+A modern Next.js frontend (React + TypeScript) with a clean, responsive UI optimized for long-form learning
+A FastAPI backend designed for structured AI workflows and streaming responses
+A custom multi-agent architecture built from scratch to orchestrate learning generation
+Real-time streaming of AI-generated lessons using Server-Sent Events (SSE)
+Persistent user data and curriculum tracking
+
+Agent-Based Architecture
+
+A core part of DeepDaily is its custom AI agent system, designed to simulate how a human would structure learning over time.
+The system includes:
+
+Planner Agent
+Generates a full multi-day curriculum based on topic, level (beginner/intermediate/advanced), and duration
+
+Daily Lesson Agent
+Produces structured lessons for each day, including explanations, examples, and exercises
+
+Resource Discovery Agent
+Enriches each lesson with curated external resources (articles, videos, documentation) using web search
+
+Evaluator Agent
+Ensures consistency, quality, and progression across the generated curriculum
+
+This architecture allows DeepDaily to generate coherent, progressive learning paths instead of isolated answers.
+
+Learning Experience
+
+DeepDaily focuses on delivering a real learning flow, not just content:
+
+Step-by-step progression from fundamentals to advanced topics
+Adaptation to user-selected level (beginner → advanced)
+Daily structure that encourages consistency and habit-building
+Integrated external resources for deeper exploration
+Clean reading experience with markdown rendering and structured formatting
+
+Applied AI Engineering
+
+DeepDaily reflects my approach to building AI systems in production:
+
+Designing multi-agent orchestration systems
+Structuring prompts for deterministic, high-quality outputs
+Combining LLMs with external tools (web search) for richer results
+Managing streaming responses and partial rendering
+Building systems that balance latency, cost, and output quality
+Rather than treating AI as a single API call, DeepDaily treats it as a composable system of cooperating components.
+
+Product & System Design
+
+This project demonstrates:
+
+End-to-end ownership (idea → architecture → deployment)
+Scalable backend design for AI workloads
+Clean, production-grade frontend UX for long-form content
+Real-world application of AI beyond chat interfaces
+Strong focus on usability, structure, and user retention
+
 I speak French and Hebrew natively and English professionally. I’m deeply curious about the intersection of technology, product thinking, and artificial intelligence — and I’m motivated by building tools that are technically sound, thoughtfully designed, and impactful in the real world.
+
