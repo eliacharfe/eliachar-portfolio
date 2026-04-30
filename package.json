@@ -12,10 +12,10 @@
     "@emailjs/browser": "^4.4.1",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "bootstrap": "^5.3.8",
-    "dompurify": "^3.3.1",
+    "dompurify": "^3.3.2",
     "framer-motion": "^12.34.0",
     "gsap": "^3.14.2",
-    "next": "16.1.6",
+    "next": "^16.1.7",
     "nodemailer": "^8.0.1",
     "openai": "^6.22.0",
     "react": "19.2.3",
@@ -23,7 +23,7 @@
     "react-markdown": "^10.1.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
-    "swiper": "^12.1.1",
+    "swiper": "^12.1.2",
     "vanilla-tilt": "^1.8.1"
   },
   "devDependencies": {
